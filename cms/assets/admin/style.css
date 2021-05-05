@@ -1,0 +1,10 @@
+.form-permalink {
+    border-radius: 3px;
+    border: 1px solid #bfc9d4;
+    padding: 0px 6px;
+    color: #7d808a;
+}
+
+.sunting {
+    cursor: pointer !important;
+}
