@@ -53,6 +53,10 @@ class Produk extends CI_Controller
         $data_kategori       = $this->db->get_where('tbl_kategori', ['status' => 'ADA'], 7)->result();
         // Cek IP Pelanggan
         $ip_address = $this->input->ip_address();
+        $browser    = $this->agent->browser();
+        $os         = $this->agent->platform();
+        $cek_cart   = $this->db->get_where('rinci_transaksi_baru', ['ip_pelanggan' => $ip_address, 'browser' => $browser, 'OS' => $os])->result();
+        $jml_keranjang = count($cek_cart);
         $data = array(
             'config_midtrans'   => $config_midtrans,
             'halaman'           => 'produk',
@@ -67,7 +71,10 @@ class Produk extends CI_Controller
             'produk_pertama'    => $produk_pertama,
             'data_produk_limit' => $data_produk_limit,
             'data_random'       => $data_random,
-            'ip_address'        => $ip_address
+            'ip_address'        => $ip_address,
+            'browser'           => $browser,
+            'os'                => $os,
+            'jml_keranjang'     => $jml_keranjang
         );
         $this->load->view('include/index', $data);
     }
@@ -194,6 +201,26 @@ class Produk extends CI_Controller
         // $link          = '<a href="https://awhome.net/download.zip">disini</a>';
         $mail->Body    = 'Terima kasih sudah melakukan pembelian ilmu di ilmuparanormal.com, silahkan klik <a hreff="' . $link_pdf . '">Disini!</a> dan silahkan ikuti intruksi pembayaran doa yang diinginkan.';
         $mail->send();
+    }
+    // Tambah Kerangjang
+    public function crudtransaksi()
+    {
+        if (isset($_POST['tambah_keranjang'])) :
+            $slug       = $this->input->post('slug');
+            $ip         = $this->input->post('ip_address');
+            $browser    = $this->input->post('browser');
+            $os         = $this->input->post('os');
+            $id_produk  = $this->input->post('id_produk');
+            $cek_cart   = $this->db->get_where('rinci_transaksi_baru', ['id_produk' => $id_produk, 'ip_pelanggan' => $ip, 'browser' => $browser, 'OS' => $os])->row_array();
+            if ($cek_cart > 0) :
+                # code...
+                echo 'Doa Sudah Ada di Keranjang';
+            else :
+                $this->global_model->tambah_keranjang();
+            // echo 'Berhasil Menambahkan Doa';
+            endif;
+            redirect('produk/' . $slug);
+        endif;
     }
 }
         

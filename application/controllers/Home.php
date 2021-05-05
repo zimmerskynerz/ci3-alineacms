@@ -23,6 +23,13 @@ class Home extends CI_Controller
     }
     public function index()
     {
+        // Cek IP Pelanggan
+        $ip_address = $this->input->ip_address();
+        $browser    = $this->agent->browser();
+        $os         = $this->agent->platform();
+        $cek_cart   = $this->db->get_where('rinci_transaksi_baru', ['ip_pelanggan' => $ip_address, 'browser' => $browser, 'OS' => $os])->result();
+        $jml_keranjang = count($cek_cart);
+        // Themes
         $data_themes         = $this->db->get_where('config_themes', ['status' => 'AKTIF'])->row_array();
         $data_header         = $this->db->get_where('tbl_sett_topbar')->row_array();
         $data_depan          = $this->db->get_where('config_cs')->row_array();
@@ -46,7 +53,8 @@ class Home extends CI_Controller
             'data_kategori'     => $data_kategori,
             'produk_pertama'    => $produk_pertama,
             'data_produk_limit' => $data_produk_limit,
-            'data_random'       => $data_random
+            'data_random'       => $data_random,
+            'jml_keranjang'     => $jml_keranjang
         );
         $this->load->view('include/index', $data);
     }

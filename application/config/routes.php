@@ -12,4 +12,6 @@ $route['produk/snap/token']                         = 'Produk/token';
 $route['produk/snap/bayarlangsung']                 = 'Produk/bayarlangsung';
 $route['produk/tracking-transaksi/(:any)']          = 'Produk/konfirmasi/$1';
 $route['notif/order']                               = 'Notification/index';
-// Percobaan Midtrans
+// Tambah Keranjang
+$route['cart']                                      = 'Keranjang/index';
+$route['produk/snap/tambahkeranjang']               = 'Produk/crudtransaksi';

@@ -28,7 +28,27 @@
     <link rel="stylesheet" type="text/css" href="<?= base_url('themes/news_paper/') ?>css/flaticon.css" />
 
     <link rel="stylesheet" href="<?= base_url('themes/news_paper/') ?>css/style.css">
-    <script async src='/cdn-cgi/bm/cv/669835187/api.js'></script>
+    <s async src='/cdn-cgi/bm/cv/669835187/api.js'></s>
+    <style>
+        .badge-notif {
+            position: relative;
+        }
+
+        .badge-notif[data-badge]:after {
+            content: attr(data-badge);
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            font-size: .7em;
+            background: #e53935;
+            color: white;
+            width: 18px;
+            height: 18px;
+            text-align: center;
+            line-height: 18px;
+            border-radius: 50%;
+        }
+    </style>
 </head>
 
 <body>
@@ -194,7 +214,7 @@
                         </li>
                         <li><a href="<?= base_url() ?>berita" class="category08">BLOG</a></li>
                         <li><a href="<?= base_url() ?>login" class="category08">LOGIN</a></li>
-                        <li><a href="<?= base_url() ?>login" class="category08"><i class="fa fa-cart-arrow-down"></i></a></li>
+                        <li><a href="<?= base_url() ?>cart" class="category08"><i class="fa fa-cart-arrow-down badge-notif" data-badge="<?= $jml_keranjang ?>"></i></a></li>
                     </ul>
                 </div>
             </nav>

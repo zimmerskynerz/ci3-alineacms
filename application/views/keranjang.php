@@ -42,43 +42,45 @@
 <section class="article-post-inner">
     <div class="container">
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col">
                 <div class="articale-list">
-                    <h3 class="category-headding ">Kode Ilmu : <?= $detail_produk['id_produk'] ?></h3>
+                    <h3 class="category-headding ">Total Mahar : Rp <?= $hrg_ttl['jml_harga'] ?>,-</h3>
                     <div class="headding-border"></div>
-                    <div class="post-style2 wow fadeIn" data-wow-duration="1s">
-                        <img src="<?= base_url() ?>cms/assets/produk/img/<?= $detail_produk['foto'] ?>" alt="" class="post">
-                        <br>
-                        <button type="button" class="btn btn-style" data-toggle="modal" data-target="#keranjang">Keranjang </button>
-                        <a href=""> </a>
-                        <button type="button" class="btn btn-style" data-toggle="modal" data-target="#beli_langsung"> Beli Langsung</button>
-                        <div class="post-style2-detail">
-                            <h3><?= $detail_produk['nm_produk'] ?></h3>
-                            <div class="date">
-                                <ul>
-                                    <li><a title="" href="https://kibaguswijaya.com/"><span>Ki Bagus Wijaya</span></a> --</li>
-                                    <li><a title="">Oct 12, 2020</a> --</li>
-                                    <li><a title=""><span>275 Pelanggan</span></a></li>
-                                </ul>
-                            </div>
-                            <p>
-                                <?= htmlspecialchars_decode($detail_produk['penjelasan']) ?>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4 left-padding">
-                <div class="banner-add">
-                    <span class="add-title">- Advertisement -</span>
-                    <a href="https://<?= $awconfig_header['link_ads2'] ?>" target="_BLANK"><img src="<?= base_url() ?>cms/assets/setting/<?= $awconfig_header['ads_2'] ?>" class="img-responsive center-block" alt=""></a>
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center;">Kode Doa</th>
+                                <th style="text-align: center;">Nama Doa</th>
+                                <th style="text-align: center;">Harga Mahar</th>
+                                <th style="text-align: center; width: 15px;">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            foreach ($keranjang as $Keranjang) : ?>
+                                <tr>
+                                    <td style="text-align: center;"><?= $Keranjang->id_produk ?></td>
+                                    <td><?= $Keranjang->nm_produk ?></td>
+                                    <td style="text-align: center;">Rp <?= $Keranjang->harga ?>,-</td>
+                                    <td style="text-align: center;">
+                                        <a id="keranjang_detail" href="javascript:void(0);" class="bs-tooltip" data-toggle="modal" data-target="#detail_keranjang" data-ip_pelanggan="<?= $Keranjang->ip_pelanggan ?>" data-browser="<?= $Keranjang->browser ?>" data-OS="<?= $Keranjang->OS ?>" data-id_produk="<?= $Keranjang->id_produk ?>">
+                                            <i class="fa fa-edit"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            <?php
+                            endforeach;
+                            ?>
+                        </tbody>
+                    </table>
+                    <div class="headding-border"></div>
                 </div>
             </div>
         </div>
     </div>
 </section>
 
-<div class="modal fade" id="keranjang" tabindex="-1" role="dialog" aria-labelledby="beli_langsungTitle" aria-hidden="true">
+<!-- <div class="modal fade" id="keranjang" tabindex="-1" role="dialog" aria-labelledby="beli_langsungTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -152,7 +154,7 @@
             </form>
         </div>
     </div>
-</div>
+</div> -->
 <script type="text/javascript">
     $('#pay-button').click(function(event) {
         $("#beli_langsung .close").click()

@@ -124,4 +124,37 @@ class Global_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    function tambah_keranjang()
+    {
+        $data = array(
+            'id_produk'    => $this->input->post('id_produk'),
+            'harga'        => $this->input->post('harga'),
+            'ip_pelanggan' => $this->input->post('ip_address'),
+            'browser'      => $this->input->post('browser'),
+            'OS'           => $this->input->post('os')
+        );
+        $this->db->insert('rinci_transaksi_baru', $data);
+    }
+    function getDataKeranjang($ip_address, $browser, $os)
+    {
+        $query = $this->db->select('*');
+        $query = $this->db->from('rinci_transaksi_baru as A');
+        $query = $this->db->join('tbl_produk as B', 'A.id_produk=B.id_produk');
+        $query = $this->db->where('A.ip_pelanggan', $ip_address);
+        $query = $this->db->where('A.browser', $browser);
+        $query = $this->db->where('A.OS', $os);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    function getTotalHarga($ip_address, $browser, $os)
+    {
+        $query = $this->db->select('sum(A.harga) as jml_harga');
+        $query = $this->db->from('rinci_transaksi_baru as A');
+        $query = $this->db->join('tbl_produk as B', 'A.id_produk=B.id_produk');
+        $query = $this->db->where('A.ip_pelanggan', $ip_address);
+        $query = $this->db->where('A.browser', $browser);
+        $query = $this->db->where('A.OS', $os);
+        $query = $this->db->get();
+        return $query->row_array();
+    }
 }
