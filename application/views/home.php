@@ -58,7 +58,7 @@
             <div class="col-sm-4">
                 <div class="contact-address">
                     <h3><?= $Produk_laris->nm_produk ?></h3>
-                    <img src="<?= base_url() ?>cms/assets/produk/img/<?= $Produk_laris->foto ?>" alt="Avatar" class="avatar">
+                    <img src="<?= base_url() ?>assets/produk/img/<?= $Produk_laris->foto ?>" alt="Avatar" class="avatar">
                     <br>
                     <br>
                     <a class="btn btn-style" href="<?= base_url() ?>produk/<?= $Produk_laris->slug_produk ?>">Selanjutnya</a>
@@ -93,7 +93,7 @@
                                         <div class="post-wrapper wow fadeIn" data-wow-duration="1s">
                                             <div class="post-thumb">
                                                 <a href="<?= base_url() ?>produk/<?= $produk_pertama['slug_produk'] ?>">
-                                                    <img src="<?= base_url() ?>cms/assets/produk/img/<?= $produk_pertama['foto'] ?>" alt="" class="post">
+                                                    <img src="<?= base_url() ?>assets/produk/img/<?= $produk_pertama['foto'] ?>" alt="" class="post">
                                                 </a>
                                             </div>
                                             <h3>
@@ -120,7 +120,7 @@
                                                 <div class="home2-post">
                                                     <div class="post-thumb wow fadeIn" data-wow-duration="1s" data-wow-delay="0.2s">
                                                         <a href="<?= base_url() ?>produk/<?= $Data_produk_limit->slug_produk ?>">
-                                                            <img src="<?= base_url() ?>cms/assets/produk/img/<?= $Data_produk_limit->foto ?>" alt="" class="img-responsive">
+                                                            <img src="<?= base_url() ?>assets/produk/img/<?= $Data_produk_limit->foto ?>" alt="" class="img-responsive">
                                                         </a>
                                                     </div>
                                                     <div class="post-title-author-details">
@@ -150,7 +150,7 @@
                                 <div class="post-wrapper wow fadeIn" data-wow-duration="1s">
                                     <div class="post-thumb">
                                         <a href="<?= base_url() ?>produk/<?= $Data_random->slug_produk ?>">
-                                            <img src="<?= base_url() ?>cms/assets/produk/img/<?= $Data_random->foto ?>" alt="" class="post2">
+                                            <img src="<?= base_url() ?>assets/produk/img/<?= $Data_random->foto ?>" alt="" class="post2">
                                         </a>
                                     </div>
                                     <div class="post-info meta-info-rn">
@@ -178,14 +178,14 @@
                 </div>
             </section>
             <div class="ads">
-                <a href="https://<?= $awconfig_header['link_ads1'] ?>" target="_BLANK"><img src="<?= base_url() ?>cms/assets/setting/<?= $awconfig_header['ads_1'] ?>" class="img-responsive center-block" alt=""></a>
+                <a href="https://<?= $awconfig_header['link_ads1'] ?>" target="_BLANK"><img src="<?= base_url() ?>assets/setting/<?= $awconfig_header['ads_1'] ?>" class="img-responsive center-block" alt=""></a>
             </div>
         </div>
 
         <div class="col-md-4 col-sm-4 left-padding">
             <div class="banner-add">
                 <span class="add-title">- Advertisement -</span>
-                <a href="https://<?= $awconfig_header['link_ads2'] ?>" target="_BLANK"><img src="<?= base_url() ?>cms/assets/setting/<?= $awconfig_header['ads_2'] ?>" class="img-responsive center-block" alt=""></a>
+                <a href="https://<?= $awconfig_header['link_ads2'] ?>" target="_BLANK"><img src="<?= base_url() ?>assets/setting/<?= $awconfig_header['ads_2'] ?>" class="img-responsive center-block" alt=""></a>
             </div>
             <div class="tab-inner">
                 <ul class="tabs">
@@ -200,7 +200,7 @@
                         foreach ($data_random as $Data_random) : ?>
                             <div class="box-item wow fadeIn" data-wow-duration="1s">
                                 <div class="img-thumb">
-                                    <a href="<?= base_url() ?>produk/<?= $Data_random->slug_produk ?>" rel="bookmark"><img class="entry-thumb" src="<?= base_url() ?>cms/assets/produk/img/<?= $Data_random->foto ?>" alt="" height="80" width="90"></a>
+                                    <a href="<?= base_url() ?>produk/<?= $Data_random->slug_produk ?>" rel="bookmark"><img class="entry-thumb" src="<?= base_url() ?>assets/produk/img/<?= $Data_random->foto ?>" alt="" height="80" width="90"></a>
                                 </div>
                                 <div class="item-details">
                                     <h6 class="sub-category-title bg-color-2">
@@ -223,7 +223,7 @@
                         foreach ($data_produk_limit as $Data_random) : ?>
                             <div class="box-item wow fadeIn" data-wow-duration="1s">
                                 <div class="img-thumb">
-                                    <a href="<?= base_url() ?>produk/<?= $Data_random->slug_produk ?>" rel="bookmark"><img class="entry-thumb" src="<?= base_url() ?>cms/assets/produk/img/<?= $Data_random->foto ?>" alt="" height="80" width="90"></a>
+                                    <a href="<?= base_url() ?>produk/<?= $Data_random->slug_produk ?>" rel="bookmark"><img class="entry-thumb" src="<?= base_url() ?>assets/produk/img/<?= $Data_random->foto ?>" alt="" height="80" width="90"></a>
                                 </div>
                                 <div class="item-details">
                                     <h6 class="sub-category-title bg-color-4">

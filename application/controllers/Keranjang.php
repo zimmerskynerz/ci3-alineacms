@@ -6,6 +6,14 @@ defined('BASEPATH') or exit('No direct script access allowed');
 // Pencipta      : AWBimasakti and Yusuf1bimasakti
 // Author        : PT. Bimasakti Indera Gemilang
 // Creator       : https://ilmuparanormal.com   
+
+header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Methods: GET, OPTIONS");
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 class Keranjang extends CI_Controller
 {
     public function __construct()
@@ -14,6 +22,7 @@ class Keranjang extends CI_Controller
         $this->load->model('global_model');
         $this->set_timezone();
         $this->load->library('midtrans');
+        $this->load->library('veritrans');
         // Midtrans Konfigurasi
         $config_midtrans2     = $this->db->get_where('config_midtrans')->row_array();
         $params               = array('server_key' => $config_midtrans2['server_key'], 'production' => false);
@@ -62,32 +71,38 @@ class Keranjang extends CI_Controller
     }
     public function token()
     {
-        $ip_address = $this->input->post('ip_address');
-        $browser    = $this->input->post('browser');
-        $os         = $this->input->post('os');
-        $nm_pelanggan = $this->input->post('nm_pelanggan');
-        $email = $this->input->post('email_aktif');
-        $no_hp = $this->input->post('no_hp');
-
+        // Data konsumen atau data pribadi pembeli doa
+        $ip_address     = $this->input->post('ip_address');
+        $browser        = $this->input->post('browser');
+        $os             = $this->input->post('os');
+        $nm_pelanggan   = $this->input->post('nm_pelanggan');
+        $email          = $this->input->post('email_aktif');
+        $no_hp          = $this->input->post('no_hp');
+        // $hrg_ttl        = $this->input->post('hrg_ttl');
+        // Tanggal melakukan transaksi
         $tgl_ini = date('Ymd');
+        // Nomer transaksi atau kode transaksi berupa tanggal+trandom nomer
         $order_id = $tgl_ini . rand();
+        // Ambil data semua keranjang
         $keranjang  = $this->global_model->getDataKeranjang($ip_address, $browser, $os);
-        $hrg_ttl    = $this->global_model->getTotalHarga($ip_address, $browser, $os);
-        $this->global_model->transaksi_keranjang($hrg_ttl, $order_id, $nm_pelanggan, $email, $no_hp, $ip_address, $browser, $os, $keranjang);
+        $harga_total    = $this->global_model->getTotalHarga($ip_address, $browser, $os);
+        $hrg_ttl = $harga_total['jml_harga'];
+        $this->global_model->transaksi_keranjang($hrg_ttl, $order_id, $nm_pelanggan, $email, $no_hp, $ip_address, $browser, $os);
+
         $transaction_details = array(
             'order_id' => $order_id,
-            'gross_amount' => $hrg_ttl, // no decimal allowed for creditcard
+            'gross_amount' => $hrg_ttl // no decimal allowed for creditcard
         );
+        $item1_details = array();
         foreach ($keranjang as $Keranjang) :
-            $item1_details = array(
-                'id' => $Keranjang->id_produk,
-                'price' =>  $Keranjang->harga,
-                'quantity' =>  1,
-                'name' => $Keranjang->nama
+            # code...
+            $item1_details[] = array(
+                'id'        => $Keranjang->id_produk,
+                'price'     =>  $Keranjang->harga,
+                'quantity'  =>  1,
+                'name'      => $Keranjang->nm_produk
             );
         endforeach;
-        $item_details = array($item1_details);
-        // Optional
         $customer_details = array(
             'first_name'    => $nm_pelanggan,
             'email'         => $email,
@@ -107,10 +122,10 @@ class Keranjang extends CI_Controller
 
         $transaction_data = array(
             'transaction_details' => $transaction_details,
-            'item_details'       => $item_details,
-            'customer_details'   => $customer_details,
-            'credit_card'        => $credit_card,
-            'expiry'             => $custom_expiry
+            'item_details'        => $item1_details,
+            'customer_details'    => $customer_details,
+            'credit_card'         => $credit_card,
+            'expiry'              => $custom_expiry
         );
 
         error_log(json_encode($transaction_data));

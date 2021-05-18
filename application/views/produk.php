@@ -47,7 +47,7 @@
                     <h3 class="category-headding ">Kode Ilmu : <?= $detail_produk['id_produk'] ?></h3>
                     <div class="headding-border"></div>
                     <div class="post-style2 wow fadeIn" data-wow-duration="1s">
-                        <img src="<?= base_url() ?>cms/assets/produk/img/<?= $detail_produk['foto'] ?>" alt="" class="post">
+                        <img src="<?= base_url() ?>assets/produk/img/<?= $detail_produk['foto'] ?>" alt="" class="post">
                         <br>
                         <button type="button" class="btn btn-style" data-toggle="modal" data-target="#keranjang">Keranjang </button>
                         <a href=""> </a>
@@ -71,7 +71,7 @@
             <div class="col-md-4 col-sm-4 left-padding">
                 <div class="banner-add">
                     <span class="add-title">- Advertisement -</span>
-                    <a href="https://<?= $awconfig_header['link_ads2'] ?>" target="_BLANK"><img src="<?= base_url() ?>cms/assets/setting/<?= $awconfig_header['ads_2'] ?>" class="img-responsive center-block" alt=""></a>
+                    <a href="https://<?= $awconfig_header['link_ads2'] ?>" target="_BLANK"><img src="<?= base_url() ?>assets/setting/<?= $awconfig_header['ads_2'] ?>" class="img-responsive center-block" alt=""></a>
                 </div>
             </div>
         </div>

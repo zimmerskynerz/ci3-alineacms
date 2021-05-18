@@ -157,62 +157,42 @@ class Global_model extends CI_Model
         $query = $this->db->get();
         return $query->row_array();
     }
-    function transaksi_keranjang($hrg_ttl, $order_id, $nm_pelanggan, $email, $no_hp, $ip_address, $browser, $os, $keranjang)
+    function transaksi_keranjang($hrg_ttl, $order_id, $nm_pelanggan, $email, $no_hp, $ip_address, $browser, $os)
     {
-        // Cek Data Keranjang
-        $cek_email = $this->db->get_where('tbl_transaksi', ['email' => $email, 'status_transaksi' => 'PROSES'])->row_array();
-        if ($cek_email > 0) :
-            $order_id_lama = $cek_email['id_transaksi'];
-            $this->db->where('id_transaksi', $order_id_lama);
-            $this->db->delete('rinci_transaksi');
-            $this->db->where('id_transaksi', $order_id_lama);
-            $this->db->delete('tbl_transaksi');
-            // Tambah Data
-            $data_transaksi = array(
-                'id_transaksi'     => $order_id,
-                'tgl_transaksi'    => date('Y-m-d'),
-                'tgl_kadaluarsa'   => null,
-                'nama'             => $nm_pelanggan,
-                'email'            => $email,
-                'no_hp'            => $no_hp,
-                'type_transaksi'   => null,
-                'jml_bayar'        => $hrg_ttl,
-                'status_transaksi' => 'PROSES',
-                'pdf_url'          => null
+        $data_transaksi = array(
+            'id_transaksi'     => $order_id,
+            'tgl_transaksi'    => date('Y-m-d'),
+            'tgl_kadaluarsa'   => null,
+            'nama'             => $nm_pelanggan,
+            'email'            => $email,
+            'no_hp'            => $no_hp,
+            'type_transaksi'   => null,
+            'jml_bayar'        => $hrg_ttl,
+            'status_transaksi' => 'PROSES',
+            'pdf_url'          => null
+        );
+        $this->db->insert('tbl_transaksi', $data_transaksi);
+        $keranjang = $this->__CekKeranjang($ip_address, $browser, $os);
+        foreach ($keranjang as $Keranjang) :
+            $rinci_transaksi = array(
+                'id_transaksi' => $order_id,
+                'id_produk' => $Keranjang->id_produk,
+                'harga' => $Keranjang->harga
             );
-            $this->db->insert('tbl_transaksi', $data_transaksi);
-            // Tambah data rinci transaksi
-            foreach ($keranjang as $Keranjang) :
-                $rinci_transaksi = array(
-                    'id_transaksi'     => $order_id,
-                    'id_produk'        => $Keranjang->id_produk,
-                    'harga'            => $Keranjang->harga
-                );
-                $this->db->insert('rinci_transaksi', $rinci_transaksi);
-            endforeach;
-        else :
-            $data_transaksi = array(
-                'id_transaksi'     => $order_id,
-                'tgl_transaksi'    => date('Y-m-d'),
-                'tgl_kadaluarsa'   => null,
-                'nama'             => $nm_pelanggan,
-                'email'            => $email,
-                'no_hp'            => $no_hp,
-                'type_transaksi'   => null,
-                'jml_bayar'        => $hrg_ttl,
-                'status_transaksi' => 'PROSES',
-                'pdf_url'          => null
-            );
-            $this->db->insert('tbl_transaksi', $data_transaksi);
-            foreach ($keranjang as $Keranjang) :
-                $rinci_transaksi = array(
-                    'id_transaksi'     => $order_id,
-                    'id_produk'        => $Keranjang->id_produk,
-                    'harga'            => $Keranjang->harga
-                );
-                $this->db->insert('rinci_transaksi', $rinci_transaksi);
-            endforeach;
-        endif;
+            $this->db->insert('rinci_transaksi', $rinci_transaksi);
+        endforeach;
+        $this->db->delete('rinci_transaksi_baru', ['ip_pelanggan' => $ip_address]);
+    }
+    private function __CekKeranjang($ip_address, $browser, $os)
+    {
+        $query = $this->db->select('*');
+        $query = $this->db->from('rinci_transaksi_baru as A');
+        $query = $this->db->join('tbl_produk as B', 'A.id_produk=B.id_produk');
+        $query = $this->db->where('A.ip_pelanggan', $ip_address);
+        $query = $this->db->where('A.browser', $browser);
+        $query = $this->db->where('A.OS', $os);
+        $query = $this->db->get();
+        return $query->result();
     }
     function getDataRinciDoa($order_id)
     {
@@ -222,5 +202,23 @@ class Global_model extends CI_Model
         $query = $this->db->where('A.id_transaksi', $order_id);
         $query = $this->db->get();
         return $query->row_array();
+    }
+    function getDataRinciDoaKeranjang($order_id)
+    {
+        $query = $this->db->select('*');
+        $query = $this->db->from('rinci_transaksi as A');
+        $query = $this->db->join('tbl_produk as B', 'A.id_produk=B.id_produk');
+        $query = $this->db->where('A.id_transaksi', $order_id);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    function cekDataDoa($order_id)
+    {
+        $query = $this->db->select('*');
+        $query = $this->db->from('rinci_transaksi as A');
+        $query = $this->db->join('tbl_produk as B', 'A.id_produk=B.id_produk');
+        $query = $this->db->where('A.id_transaksi', $order_id);
+        $query = $this->db->get();
+        return $query->result();
     }
 }

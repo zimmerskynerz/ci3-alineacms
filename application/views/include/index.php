@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?= $awconfig_header['jdl_web'] ?> - <?= $awconfig_header['desc_web'] ?></title>
-    <link rel="shortcut icon" href="<?= base_url() ?>cms/assets/setting/<?= $awconfig_header['icon_web'] ?>" />
+    <link rel="shortcut icon" href="<?= base_url() ?>assets/setting/<?= $awconfig_header['icon_web'] ?>" />
 
     <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i|Ubuntu:300,300i,400,400i,500,500i,700,700i" rel="stylesheet">
 
@@ -145,13 +145,13 @@
                     <div class="col-xs-12 col-md-4 col-sm-4">
                         <div class="header-logo">
                             <a href="<?= base_url() ?>">
-                                <img class="td-retina-data img-responsive" src="<?= base_url() ?>cms/assets/setting/<?= $awconfig_header['logo_1'] ?>" alt="">
+                                <img class="td-retina-data img-responsive" src="<?= base_url() ?>assets/setting/<?= $awconfig_header['logo_1'] ?>" alt="">
                             </a>
                         </div>
                     </div>
                     <div class="col-xs-8 col-md-8 col-sm-8 hidden-xs">
                         <div class="header-banner">
-                            <a href="https://<?= $awconfig_header['link_ads1'] ?>" target="_BLANK"><img class="td-retina img-responsive" src="<?= base_url() ?>cms/assets/setting/<?= $awconfig_header['ads_1'] ?>" alt=""></a>
+                            <a href="https://<?= $awconfig_header['link_ads1'] ?>" target="_BLANK"><img class="td-retina img-responsive" src="<?= base_url() ?>assets/setting/<?= $awconfig_header['ads_1'] ?>" alt=""></a>
                         </div>
                     </div>
                 </div>
@@ -229,7 +229,7 @@
                 <div class="col-sm-3">
                     <div class="footer-box footer-logo-address">
 
-                        <img src="<?= base_url() ?>cms/assets/setting/<?= $awconfig_header['logo_1'] ?>" class="img-responsive" alt="">
+                        <img src="<?= base_url() ?>assets/setting/<?= $awconfig_header['logo_1'] ?>" class="img-responsive" alt="">
                         <address>
                             NUR WIJAYA | Sunggingan 2/3 No 163B, Kec Kota, Kudus, Jawa Tengah.
                             <br> WhatsApp : <a href="https://wa.me/62816577880">+62816577880</a>

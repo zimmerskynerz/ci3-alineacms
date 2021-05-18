@@ -116,7 +116,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="pay-button" name="minta_ijin">Bayar</button>
+                    <button type="button" class="btn btn-primary" id="pay-button" data-amount="<?= $hrg_ttl['jml_harga'] ?>" name="minta_ijin">Bayar</button>
                 </div>
             </form>
         </div>
@@ -134,6 +134,7 @@
         var nm_pelanggan = $("#nm_pelanggan").val();
         var email_aktif = $("#email_aktif").val();
         var no_hp = $("#no_hp").val();
+        var amount = $(this).data('amount');
         $.ajax({
             type: 'POST',
             url: '<?= base_url() ?>produk/snap/tokenkeranjang',
@@ -143,7 +144,8 @@
                 os: os,
                 nm_pelanggan: nm_pelanggan,
                 email_aktif: email_aktif,
-                no_hp: no_hp
+                no_hp: no_hp,
+                hrg_ttl: amount
             },
             cache: false,
             success: function(data) {
