@@ -60,6 +60,64 @@ class Keranjang extends CI_Controller
         );
         $this->load->view('include/index', $data);
     }
+    public function token()
+    {
+        $ip_address = $this->input->post('ip_address');
+        $browser    = $this->input->post('browser');
+        $os         = $this->input->post('os');
+        $nm_pelanggan = $this->input->post('nm_pelanggan');
+        $email = $this->input->post('email_aktif');
+        $no_hp = $this->input->post('no_hp');
+
+        $tgl_ini = date('Ymd');
+        $order_id = $tgl_ini . rand();
+        $keranjang  = $this->global_model->getDataKeranjang($ip_address, $browser, $os);
+        $hrg_ttl    = $this->global_model->getTotalHarga($ip_address, $browser, $os);
+        $this->global_model->transaksi_keranjang($hrg_ttl, $order_id, $nm_pelanggan, $email, $no_hp, $ip_address, $browser, $os, $keranjang);
+        $transaction_details = array(
+            'order_id' => $order_id,
+            'gross_amount' => $hrg_ttl, // no decimal allowed for creditcard
+        );
+        foreach ($keranjang as $Keranjang) :
+            $item1_details = array(
+                'id' => $Keranjang->id_produk,
+                'price' =>  $Keranjang->harga,
+                'quantity' =>  1,
+                'name' => $Keranjang->nama
+            );
+        endforeach;
+        $item_details = array($item1_details);
+        // Optional
+        $customer_details = array(
+            'first_name'    => $nm_pelanggan,
+            'email'         => $email,
+            'phone'         => $no_hp
+        );
+        // Data yang akan dikirim untuk request redirect_url.
+        $credit_card['secure'] = true;
+        //ser save_card true to enable oneclick or 2click
+        //$credit_card['save_card'] = true;
+
+        $time = time();
+        $custom_expiry = array(
+            'start_time' => date("Y-m-d H:i:s O", $time),
+            'unit' => 'day',
+            'duration'  => 1
+        );
+
+        $transaction_data = array(
+            'transaction_details' => $transaction_details,
+            'item_details'       => $item_details,
+            'customer_details'   => $customer_details,
+            'credit_card'        => $credit_card,
+            'expiry'             => $custom_expiry
+        );
+
+        error_log(json_encode($transaction_data));
+        $snapToken = $this->midtrans->getSnapToken($transaction_data);
+        error_log($snapToken);
+        echo $snapToken;
+    }
 }
         
     /* End of file  Keranjang.php */

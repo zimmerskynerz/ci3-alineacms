@@ -24,24 +24,24 @@ class InstalledVersions
 private static $installed = array (
   'root' => 
   array (
-    'pretty_version' => '1.0.0+no-version-set',
-    'version' => '1.0.0.0',
+    'pretty_version' => 'dev-main',
+    'version' => 'dev-main',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => '39157c0b03a5244a0cf4cc4411d419db6ccdbdb1',
     'name' => 'codeigniter/framework',
   ),
   'versions' => 
   array (
     'codeigniter/framework' => 
     array (
-      'pretty_version' => '1.0.0+no-version-set',
-      'version' => '1.0.0.0',
+      'pretty_version' => 'dev-main',
+      'version' => 'dev-main',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => '39157c0b03a5244a0cf4cc4411d419db6ccdbdb1',
     ),
     'doctrine/instantiator' => 
     array (
@@ -85,12 +85,12 @@ private static $installed = array (
     ),
     'nesbot/carbon' => 
     array (
-      'pretty_version' => '2.47.0',
-      'version' => '2.47.0.0',
+      'pretty_version' => '2.48.0',
+      'version' => '2.48.0.0',
       'aliases' => 
       array (
       ),
-      'reference' => '606262fd8888b75317ba9461825a24fc34001e1e',
+      'reference' => 'd3c447f21072766cddec3522f9468a5849a76147',
     ),
     'phenx/php-font-lib' => 
     array (
@@ -346,12 +346,12 @@ private static $installed = array (
     ),
     'symfony/translation' => 
     array (
-      'pretty_version' => 'v5.2.7',
-      'version' => '5.2.7.0',
+      'pretty_version' => 'v5.2.8',
+      'version' => '5.2.8.0',
       'aliases' => 
       array (
       ),
-      'reference' => 'e37ece5242564bceea54d709eafc948377ec9749',
+      'reference' => '445caa74a5986f1cc9dd91a2975ef68fa7cb2068',
     ),
     'symfony/translation-contracts' => 
     array (

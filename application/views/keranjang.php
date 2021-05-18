@@ -44,7 +44,9 @@
         <div class="row">
             <div class="col">
                 <div class="articale-list">
-                    <h3 class="category-headding ">Total Mahar : Rp <?= $hrg_ttl['jml_harga'] ?>,-</h3>
+                    <div class="card-header">
+                        <h3 class="category-headding ">Total Mahar : Rp <?= $hrg_ttl['jml_harga'] ?>,-</h3>
+                    </div>
                     <div class="headding-border"></div>
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
@@ -73,6 +75,9 @@
                             ?>
                         </tbody>
                     </table>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bayar_keranjang">
+                        Bayar
+                    </button><br><br>
                     <div class="headding-border"></div>
                 </div>
             </div>
@@ -80,60 +85,22 @@
     </div>
 </section>
 
-<!-- <div class="modal fade" id="keranjang" tabindex="-1" role="dialog" aria-labelledby="beli_langsungTitle" aria-hidden="true">
+<div class="modal fade" id="bayar_keranjang" tabindex="-1" role="dialog" aria-labelledby="bayar_keranjangTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title" id="scrollableModalTitle">Tambah Ke Keranjang?</h3>
+                <h3 class="modal-title" id="scrollableModalTitle">Bayar Semua Doa?</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="payment-form" method="post" action="<?= site_url() ?>produk/snap/tambahkeranjang">
-                <div class="modal-body">
-                    <div class="form-group mb-3">
-                        <label for="example-email">Kode Doa</label>
-                        <input type="text" id="id_produk" name="id_produk" value="<?= $detail_produk['id_produk'] ?>" class="form-control" placeholder="Masukkan Nama Lengkap" readonly>
-                        <input type="text" id="slug" name="slug" value="<?= $detail_produk['slug_produk'] ?>" class="form-control" placeholder="Masukkan Nama Lengkap" style="display: none;">
-                        <input type="text" id="ip_address" name="ip_address" value="<?= $ip_address ?>" class="form-control" placeholder="Masukkan Nama Lengkap" style="display: none;">
-                        <input type="text" id="os" name="os" value="<?= $os ?>" class="form-control" placeholder="Masukkan Nama Lengkap" style="display: none;">
-                        <input type="text" id="browser" name="browser" value="<?= $browser ?>" class="form-control" placeholder="Masukkan Nama Lengkap" style="display: none;">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="example-email">Nama Doa</label>
-                        <input type="text" id="nm_produk" name="nm_produk" value="<?= $detail_produk['nm_produk'] ?>" class="form-control" placeholder="Masukkan Nama Lengkap" readonly>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="example-email">Harga Mahar Doa</label>
-                        <input type="text" id="harga" name="harga" value="<?= $detail_produk['harga'] ?>" class="form-control" placeholder="Masukkan Nama Lengkap" readonly>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" id="tambah_keranjang" name="tambah_keranjang">Tambah</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="beli_langsung" tabindex="-1" role="dialog" aria-labelledby="beli_langsungTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-scrollable" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title" id="scrollableModalTitle">Beli Doa Sekarang?</h3>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form id="payment-form" method="post" action="<?= site_url() ?>produk/snap/bayarlangsung">
+            <form id="payment-form" method="post" action="<?= site_url() ?>produk/snap/bayarkeranjang">
                 <div class="modal-body">
                     <div class="form-group mb-3">
                         <label for="example-email">Nama Depan</label>
-                        <input type="text" id="id_produk" name="id_produk" value="<?= $detail_produk['id_produk'] ?>" class="form-control" placeholder="Masukkan Nama Lengkap" style="display: none;">
-                        <input type="text" id="nm_produk" name="nm_produk" value="<?= $detail_produk['nm_produk'] ?>" class="form-control" placeholder="Masukkan Nama Lengkap" style="display: none;">
-                        <input type="text" id="harga" name="harga" value="<?= $detail_produk['harga'] ?>" class="form-control" placeholder="Masukkan Nama Lengkap" style="display: none;">
                         <input type="text" id="ip_address" name="ip_address" value="<?= $ip_address ?>" class="form-control" placeholder="Masukkan Nama Lengkap" style="display: none;">
+                        <input type="text" id="browser" name="browser" value="<?= $browser ?>" class="form-control" placeholder="Masukkan Nama Lengkap" style="display: none;">
+                        <input type="text" id="os" name="os" value="<?= $os ?>" class="form-control" placeholder="Masukkan Nama Lengkap" style="display: none;">
                         <input type="text" id="nm_pelanggan" name="nm_pelanggan" class="form-control" placeholder="Masukkan Nama Lengkap" required>
                     </div>
                     <div class="form-group mb-3">
@@ -154,25 +121,26 @@
             </form>
         </div>
     </div>
-</div> -->
+</div>
+
 <script type="text/javascript">
     $('#pay-button').click(function(event) {
         $("#beli_langsung .close").click()
         event.preventDefault();
         $(this).attr("disabled", "disabled");
-        var id_produk = $("#id_produk").val();
-        var nm_produk = $("#nm_produk").val();
-        var harga = $("#harga").val();
+        var ip_address = $("#ip_address").val();
+        var browser = $("#browser").val();
+        var os = $("#os").val();
         var nm_pelanggan = $("#nm_pelanggan").val();
         var email_aktif = $("#email_aktif").val();
         var no_hp = $("#no_hp").val();
         $.ajax({
             type: 'POST',
-            url: '<?= base_url() ?>produk/snap/token',
+            url: '<?= base_url() ?>produk/snap/tokenkeranjang',
             data: {
-                id_produk: id_produk,
-                nm_produk: nm_produk,
-                harga: harga,
+                ip_address: ip_address,
+                browser: browser,
+                os: os,
                 nm_pelanggan: nm_pelanggan,
                 email_aktif: email_aktif,
                 no_hp: no_hp

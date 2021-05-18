@@ -87,7 +87,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="payment-form" method="post" action="<?= site_url() ?>produk/snap/tambahkeranjang">
+            <form method="post" action="<?= site_url() ?>produk/snap/tambahkeranjang">
                 <div class="modal-body">
                     <div class="form-group mb-3">
                         <label for="example-email">Kode Doa</label>

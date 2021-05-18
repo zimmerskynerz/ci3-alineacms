@@ -25,6 +25,7 @@ class Produk extends CI_Controller
         $this->load->model('global_model');
         $this->set_timezone();
         $this->load->library('midtrans');
+        $this->load->library('veritrans');
         // Midtrans Konfigurasi
         $config_midtrans2     = $this->db->get_where('config_midtrans')->row_array();
         $params               = array('server_key' => $config_midtrans2['server_key'], 'production' => false);
@@ -178,11 +179,25 @@ class Produk extends CI_Controller
         $bitly = json_decode($result);
         return $bitly->link;
     }
+    public function NotifLangsung()
+    {
+        $json_result = file_get_contents('php://input');
+        $result = json_decode($json_result, "true");
 
+        $order_id      = $result['order_id'];
+        $data = array(
+            'status_transaksi' => $result['status_code']
+        );
+        $this->db->where('id_transaksi', $order_id);
+        $this->db->update('tbl_transaksi', $data);
+        $this->__KirimDoa($order_id);
+        echo 'Selamat Datang';
+    }
     private function __kirimNotifBayar($order_id, $link_pdf)
     {
         $data_config      = $this->db->get_where('config_smtp')->row_array();
         $mail             = new PHPMailer(true);
+        $mail->IsHTML(true);
         $mail->SMTPDebug  = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
         $mail->isSMTP();                                            // Send using SMTP
         $mail->Host       = '' . $data_config['host'] . '';         // Set the SMTP server to send through
@@ -199,7 +214,32 @@ class Produk extends CI_Controller
         $mail->addAddress($email_konsumen, $nm_konsumen);     // Add a recipient
         $mail->Subject = 'Konfirmasi Pembayaran Doa';
         // $link          = '<a href="https://awhome.net/download.zip">disini</a>';
-        $mail->Body    = 'Terima kasih sudah melakukan pembelian ilmu di ilmuparanormal.com, silahkan klik <a hreff="' . $link_pdf . '">Disini!</a> dan silahkan ikuti intruksi pembayaran doa yang diinginkan.';
+        $mail->Body       = '<p>Halo, ' . $nm_konsumen . ', terimakasih sudah melakukan pembelian doa di <a href="https://ilmuparanormal.com" rel="noopener noreferrer" target="_blank">ilmuparanormal.com</a>, silahkan untuk mengikuti cara memahar doa <a href="' . $link_pdf . '" rel="noopener noreferrer" target="_blank">disini</a> untuk bisa mendapatkan doa yang anda inginkan.</p>';
+        $mail->send();
+    }
+    private function __KirimDoa($order_id)
+    {
+        $data_config      = $this->db->get_where('config_smtp')->row_array();
+        $mail             = new PHPMailer(true);
+        $mail->IsHTML(true);
+        $mail->SMTPDebug  = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
+        $mail->isSMTP();                                            // Send using SMTP
+        $mail->Host       = '' . $data_config['host'] . '';         // Set the SMTP server to send through
+        $mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+        $mail->Username   = '' . $data_config['username'] . '';                     // SMTP username
+        $mail->Password   = '' . $data_config['password'] . '';                               // SMTP password
+        $mail->SMTPSecure = PHPMailer::ENCRYPTION_SMTPS;
+        $mail->Port       = $data_config['port'];
+        //Recipients
+        $data_transaksi   = $this->db->get_where('tbl_transaksi', ['id_transaksi' => $order_id])->row_array();
+        $email_konsumen   = $data_transaksi['email'];
+        $nm_konsumen      = $data_transaksi['nama'];
+        $mail->setFrom('' . $data_config['setFrom'] . '', 'Ki Bagus Wijaya');
+        $mail->addAddress($email_konsumen, $nm_konsumen);     // Add a recipient
+        $mail->Subject = 'Ijazah Doa';
+        // $link          = '<a href="https://awhome.net/download.zip">disini</a>';
+        $data_doa         = $this->global_model->getDataRinciDoa($order_id);
+        $mail->Body       = '<p>Halo, ' . $nm_konsumen . ', terimakasih sudah memilih Ki Bagus Wijaya sebagai guru paranormal anda, oleh sebab itu, Ki Bagus Memberikan Ijazah Doa ' . $data_doa['nm_produk'] . ', silahkan download pada link dibawah ini untuk mendapatkan petunjuk pengamalan doa ' . $data_doa['nm_produk'] . '.</p><br><br><br><br><br><br><a href="' . $data_doa['link_produk'] . '" rel="noopener noreferrer" target="_blank"><img src="https://www.fastpay.co.id/blog/wp-content/uploads/2020/04/Download-Now-Button-PNG-File.png" alt="download" style="width:200px"></a>';
         $mail->send();
     }
     // Tambah Kerangjang
