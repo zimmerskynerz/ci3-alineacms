@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => '3b51e2d94e9e8236a3c316bfc5889fcdf8451727',
+    'reference' => '8a1b06aff8e0ec9e080a2390b2e481522e0c6c03',
     'name' => 'codeigniter/framework',
   ),
   'versions' => 
@@ -41,7 +41,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => '3b51e2d94e9e8236a3c316bfc5889fcdf8451727',
+      'reference' => '8a1b06aff8e0ec9e080a2390b2e481522e0c6c03',
     ),
     'doctrine/instantiator' => 
     array (

@@ -25,7 +25,7 @@ $route['produk/snap/bayarkeranjang']                = 'Produk/bayarkeranjang';
 $route['login']                                     = 'Login';
 $route['login/cek_login']                           = 'Login/cek_login';
 $route['login/logout']                              = 'Login/logout';
-$route['wp-admin']                                  = 'Login';
+$route['wp-admin']                                  = 'Login'; 
 // Register
 $route['administrator']                             = 'admin/ControllerAdminBeranda/index';
 $route['administrator/pengguna']                    = 'admin/ControllerAdminBeranda/pengguna';
