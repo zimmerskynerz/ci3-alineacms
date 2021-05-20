@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '8a1b06aff8e0ec9e080a2390b2e481522e0c6c03',
+    'reference' => 'a4333e60640a63674bd6e4260ee494ac09239dfd',
     'name' => 'codeigniter/framework',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '8a1b06aff8e0ec9e080a2390b2e481522e0c6c03',
+      'reference' => 'a4333e60640a63674bd6e4260ee494ac09239dfd',
     ),
     'doctrine/instantiator' => 
     array (
@@ -345,6 +345,15 @@
       array (
         0 => '2.3',
       ),
+    ),
+    'symfony/var-dumper' => 
+    array (
+      'pretty_version' => 'v5.2.8',
+      'version' => '5.2.8.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'd693200a73fae179d27f8f1b16b4faf3e8569eba',
     ),
     'symfony/yaml' => 
     array (
