@@ -25,7 +25,7 @@ $route['produk/snap/bayarkeranjang']                = 'Produk/bayarkeranjang';
 $route['login']                                     = 'Login';
 $route['login/cek_login']                           = 'Login/cek_login';
 $route['login/logout']                              = 'Login/logout';
-$route['wp-admin']                                  = 'Login'; 
+$route['wp-admin']                                  = 'Login';
 // Register
 $route['administrator']                             = 'admin/ControllerAdminBeranda/index';
 $route['administrator/pengguna']                    = 'admin/ControllerAdminBeranda/pengguna';
@@ -46,9 +46,6 @@ $route['administrator/berita/upload_img']          = 'admin/ControllerAdminBerit
 $route['administrator/berita/edit/(:any)']         = 'admin/ControllerAdminBerita/edit/$1';
 $route['administrator/berita/crudberita']          = 'admin/ControllerAdminBerita/crudberita';
 
-// Menu Produk
-$route['administrator/produk']                     = 'admin/ControllerProduk/index';
-
 // Menu Pengguna
 // Menu Pengguna->Administrator
 $route['administrator/pengguna']                   = 'admin/ControllerPengguna/administrator';
@@ -59,12 +56,12 @@ $route['administrator/pengguna/pelanggan']         = 'admin/ControllerPengguna/p
 $route['administrator/pengguna/crudpelanggan']     = 'admin/ControllerPengguna/crudpelanggan';
 
 // Menu Produk
-$route['administrator/produk/index']               = 'admin/ControllerProduk/index';
-$route['administrator/produk/tambah_produk']       = 'admin/ControllerProduk/tambah_produk';
-$route['administrator/produk/d_produk/(:any)']     = 'admin/ControllerProduk/d_produk/$1';
-$route['administrator/produk/simpan']              = 'admin/ControllerProduk/simpan';
-$route['administrator/produk/crudproduk']          = 'admin/ControllerProduk/crudproduk';
-$route['administrator/produk/hapus']               = 'admin/ControllerProduk/hapus';
+$route['administrator/produk']                     = 'admin/ControllerProduk/index';
+$route['administrator/produk/tambah_produk']       = 'admin/ControllerProduk/create';
+$route['administrator/produk/simpan']              = 'admin/ControllerProduk/store';
+$route['administrator/produk/d_produk/(:any)']     = 'admin/ControllerProduk/edit/$1';
+$route['administrator/produk/update/(:any)']       = 'admin/ControllerProduk/update/$1';
+$route['administrator/produk/hapus/(:any)']        = 'admin/ControllerProduk/destroy/$1';
 
 // Menu Pengaturan
 // Menu Foto Top Bar
