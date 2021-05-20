@@ -37,3 +37,26 @@ if (!function_exists('csrf_token')) {
         return $CI->security->get_csrf_hash();
     }
 }
+
+
+if (!function_exists('set_flash')) {
+    function set_flash(string $name, array $content)
+    {
+        if (isset($_SESSION['msg_flash'])) {
+            unset($_SESSION['msg_flash']);
+        }
+        $_SESSION['msg_flash'][$name] = json_encode($content);
+    }
+}
+
+if (!function_exists('flasher')) {
+    function flasher($name)
+    {
+        if (!isset($_SESSION['msg_flash'][$name]))
+            return false;
+
+        $msg = json_decode($_SESSION['msg_flash'][$name]);
+        echo '<script>toastr["' . $msg[0] . '"]("' . $msg[1] . '")</script>';
+        unset($_SESSION['msg_flash'][$name]);
+    }
+}

@@ -26,3 +26,4 @@
 <?= $this->session->flashdata('gagal_upload_berkas'); ?>
 <?= $this->session->flashdata('berhasil_publish_produk'); ?>
 <?= $this->session->flashdata('berhasil_hapus_produk'); ?>
+<?= flasher('produk') ?>
