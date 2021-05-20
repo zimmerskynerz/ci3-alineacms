@@ -58,7 +58,9 @@
       $('.main-header').removeClass('border-bottom-0')
     }
   })
-  var $no_border_container = $('<div />', { class: 'mb-1' }).append($no_border_checkbox).append('<span>No Navbar border</span>')
+  var $no_border_container = $('<div />', {
+    class: 'mb-1'
+  }).append($no_border_checkbox).append('<span>No Navbar border</span>')
   $container.append($no_border_container)
 
   var $text_sm_body_checkbox = $('<input />', {
@@ -73,7 +75,9 @@
       $('body').removeClass('text-sm')
     }
   })
-  var $text_sm_body_container = $('<div />', { class: 'mb-1' }).append($text_sm_body_checkbox).append('<span>Body small text</span>')
+  var $text_sm_body_container = $('<div />', {
+    class: 'mb-1'
+  }).append($text_sm_body_checkbox).append('<span>Body small text</span>')
   $container.append($text_sm_body_container)
 
   var $text_sm_header_checkbox = $('<input />', {
@@ -88,7 +92,9 @@
       $('.main-header').removeClass('text-sm')
     }
   })
-  var $text_sm_header_container = $('<div />', { class: 'mb-1' }).append($text_sm_header_checkbox).append('<span>Navbar small text</span>')
+  var $text_sm_header_container = $('<div />', {
+    class: 'mb-1'
+  }).append($text_sm_header_checkbox).append('<span>Navbar small text</span>')
   $container.append($text_sm_header_container)
 
   var $text_sm_sidebar_checkbox = $('<input />', {
@@ -103,7 +109,9 @@
       $('.nav-sidebar').removeClass('text-sm')
     }
   })
-  var $text_sm_sidebar_container = $('<div />', { class: 'mb-1' }).append($text_sm_sidebar_checkbox).append('<span>Sidebar nav small text</span>')
+  var $text_sm_sidebar_container = $('<div />', {
+    class: 'mb-1'
+  }).append($text_sm_sidebar_checkbox).append('<span>Sidebar nav small text</span>')
   $container.append($text_sm_sidebar_container)
 
   var $text_sm_footer_checkbox = $('<input />', {
@@ -118,7 +126,9 @@
       $('.main-footer').removeClass('text-sm')
     }
   })
-  var $text_sm_footer_container = $('<div />', { class: 'mb-1' }).append($text_sm_footer_checkbox).append('<span>Footer small text</span>')
+  var $text_sm_footer_container = $('<div />', {
+    class: 'mb-1'
+  }).append($text_sm_footer_checkbox).append('<span>Footer small text</span>')
   $container.append($text_sm_footer_container)
 
   var $flat_sidebar_checkbox = $('<input />', {
@@ -133,7 +143,9 @@
       $('.nav-sidebar').removeClass('nav-flat')
     }
   })
-  var $flat_sidebar_container = $('<div />', { class: 'mb-1' }).append($flat_sidebar_checkbox).append('<span>Sidebar nav flat style</span>')
+  var $flat_sidebar_container = $('<div />', {
+    class: 'mb-1'
+  }).append($flat_sidebar_checkbox).append('<span>Sidebar nav flat style</span>')
   $container.append($flat_sidebar_container)
 
   var $legacy_sidebar_checkbox = $('<input />', {
@@ -148,7 +160,9 @@
       $('.nav-sidebar').removeClass('nav-legacy')
     }
   })
-  var $legacy_sidebar_container = $('<div />', { class: 'mb-1' }).append($legacy_sidebar_checkbox).append('<span>Sidebar nav legacy style</span>')
+  var $legacy_sidebar_container = $('<div />', {
+    class: 'mb-1'
+  }).append($legacy_sidebar_checkbox).append('<span>Sidebar nav legacy style</span>')
   $container.append($legacy_sidebar_container)
 
   var $compact_sidebar_checkbox = $('<input />', {
@@ -163,7 +177,9 @@
       $('.nav-sidebar').removeClass('nav-compact')
     }
   })
-  var $compact_sidebar_container = $('<div />', { class: 'mb-1' }).append($compact_sidebar_checkbox).append('<span>Sidebar nav compact</span>')
+  var $compact_sidebar_container = $('<div />', {
+    class: 'mb-1'
+  }).append($compact_sidebar_checkbox).append('<span>Sidebar nav compact</span>')
   $container.append($compact_sidebar_container)
 
   var $child_indent_sidebar_checkbox = $('<input />', {
@@ -178,7 +194,9 @@
       $('.nav-sidebar').removeClass('nav-child-indent')
     }
   })
-  var $child_indent_sidebar_container = $('<div />', { class: 'mb-1' }).append($child_indent_sidebar_checkbox).append('<span>Sidebar nav child indent</span>')
+  var $child_indent_sidebar_container = $('<div />', {
+    class: 'mb-1'
+  }).append($child_indent_sidebar_checkbox).append('<span>Sidebar nav child indent</span>')
   $container.append($child_indent_sidebar_container)
 
   var $child_hide_sidebar_checkbox = $('<input />', {
@@ -193,7 +211,9 @@
       $('.nav-sidebar').removeClass('nav-collapse-hide-child')
     }
   })
-  var $child_hide_sidebar_container = $('<div />', { class: 'mb-1' }).append($child_hide_sidebar_checkbox).append('<span>Sidebar nav child hide on collapse</span>')
+  var $child_hide_sidebar_container = $('<div />', {
+    class: 'mb-1'
+  }).append($child_hide_sidebar_checkbox).append('<span>Sidebar nav child hide on collapse</span>')
   $container.append($child_hide_sidebar_container)
 
   var $no_expand_sidebar_checkbox = $('<input />', {
@@ -208,7 +228,9 @@
       $('.main-sidebar').removeClass('sidebar-no-expand')
     }
   })
-  var $no_expand_sidebar_container = $('<div />', { class: 'mb-1' }).append($no_expand_sidebar_checkbox).append('<span>Main Sidebar disable hover/focus auto expand</span>')
+  var $no_expand_sidebar_container = $('<div />', {
+    class: 'mb-1'
+  }).append($no_expand_sidebar_checkbox).append('<span>Main Sidebar disable hover/focus auto expand</span>')
   $container.append($no_expand_sidebar_container)
 
   var $text_sm_brand_checkbox = $('<input />', {
@@ -223,7 +245,9 @@
       $('.brand-link').removeClass('text-sm')
     }
   })
-  var $text_sm_brand_container = $('<div />', { class: 'mb-1' }).append($text_sm_brand_checkbox).append('<span>Brand small text</span>')
+  var $text_sm_brand_container = $('<div />', {
+    class: 'mb-1'
+  }).append($text_sm_brand_checkbox).append('<span>Brand small text</span>')
   $container.append($text_sm_brand_container)
 
   var $dark_mode_checkbox = $('<input />', {
@@ -238,7 +262,9 @@
       $('body').removeClass('dark-mode')
     }
   })
-  var $dark_mode_container = $('<div />', { class: 'mb-4' }).append($dark_mode_checkbox).append('<span>Dark Mode</span>')
+  var $dark_mode_container = $('<div />', {
+    class: 'mb-4'
+  }).append($dark_mode_checkbox).append('<span>Dark Mode</span>')
   $container.append($dark_mode_container)
 
   $container.append('<h6>Navbar Variants</h6>')
@@ -438,9 +464,13 @@
       })
 
       $color.hover(function () {
-        $(this).css({ opacity: 1 }).removeClass('elevation-2').addClass('elevation-4')
+        $(this).css({
+          opacity: 1
+        }).removeClass('elevation-2').addClass('elevation-4')
       }, function () {
-        $(this).css({ opacity: 0.8 }).removeClass('elevation-4').addClass('elevation-2')
+        $(this).css({
+          opacity: 0.8
+        }).removeClass('elevation-4').addClass('elevation-2')
       })
 
       if (callback) {
@@ -458,3 +488,41 @@
     $(this).addClass('active')
   })
 })(jQuery)
+
+
+/**
+ * ------------------------------------------------
+ * Additional function
+ * ------------------------------------------------
+ * 
+ * Here additional function make easier work
+ */
+function formatRupiah(angka, prefix) {
+  var number_string = angka.replace(/[^,\d]/g, '').toString(),
+    split = number_string.split(','),
+    sisa = split[0].length % 3,
+    rupiah = split[0].substr(0, sisa),
+    ribuan = split[0].substr(sisa).match(/\d{3}/gi);
+
+  if (ribuan) {
+    separator = sisa ? '.' : '';
+    rupiah += separator + ribuan.join('.');
+  }
+
+  rupiah = split[1] != undefined ? rupiah + ',' + split[1] : rupiah;
+  return prefix == undefined ? rupiah : (rupiah ? 'Rp. ' + rupiah : '');
+}
+
+const toRupiah = (e) => {
+  e.currentTarget.value = formatRupiah(e.currentTarget.value, 'Rp. ');
+}
+
+const preview = (evt, target) => {
+  if (evt.currentTarget.files && evt.currentTarget.files[0]) {
+    var reader = new FileReader();
+    document.querySelector(target).style.cssText = 'display:block !important'
+    reader.onload = e => document.querySelector(target).setAttribute('src', e.target.result);
+
+    reader.readAsDataURL(evt.currentTarget.files[0]);
+  }
+}
