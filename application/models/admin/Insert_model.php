@@ -1,11 +1,18 @@
-<?php defined('BASEPATH') or exit('No direct script access allowed');
+<?php
 
-// Website ini dibuat dan dikembangkan oleh awbimasakti
-// Nama Template : OnlineShop Non-Courir
-// Pencipta      : AWBimasakti and Yusuf1bimasakti
-// Author        : PT. Bimasakti Indera Gemilang
-// Creator       : https://ilmuparanormal.com
+use App\Exceptions\CategoryInsertException;
+use App\Exceptions\TagInsertException;
 
+defined('BASEPATH') or exit('No direct script access allowed');
+
+/**
+ * This project was built and developed by awbimasakti
+ * 
+ * @package OnlineShop Non-Courir
+ * @author AWBimasakti <aw.bimasakti@gmail.com>
+ * @author ajid2 <yusuf1bimasakti@gmail.com>
+ * @copyright 2021 https://ilmuparanormal.com
+ */
 class Insert_model extends CI_Model
 {
     function ubah_topbar()
@@ -150,5 +157,50 @@ class Insert_model extends CI_Model
             'tgl_gabung'       => date('Y-m-d')
         );
         $this->db->insert('tbl_login', $data);
+    }
+
+    public function attachPostCategory($id, $categories)
+    {
+        if (empty($categories))
+            return true;
+
+        foreach ($categories as $category) {
+            $data[] = [
+                'id_produk'     => $id,
+                'id_kategori'   => $category
+            ];
+        }
+
+        try {
+            return $this->db->insert_batch('produk_kategori', $data);
+        } catch (Throwable $e) {
+            throw new CategoryInsertException('Error');
+        }
+    }
+
+    public function attachPostTag($id, $tags)
+    {
+        if (empty($tags))
+            return false;
+
+        foreach ($tags as $tag) {
+            if (!is_int($tag)) {
+                $create_tag = ['nm_tags' => $tag, 'status' => 'ADA'];
+                $this->db->insert('tbl_tags', $create_tag);
+                $tag_id = $this->db->insert_id();
+            } else {
+                $tag_id = $tag;
+            }
+            $data[] = [
+                'id_produk' => $id,
+                'id_tags'   => $tag_id
+            ];
+        }
+
+        try {
+            return $this->db->insert_batch('produk_tags', $data);
+        } catch (Throwable $e) {
+            throw new TagInsertException('Error');
+        }
     }
 }

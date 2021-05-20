@@ -4,37 +4,35 @@
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1>Edit Produk Baru</h1>
+                    <h1>Tambah Produk Baru</h1>
                 </div>
             </div>
         </div>
     </section>
     <section class="content">
         <div class="container-fluid">
-            <form role="form" method="POST" action="<?= base_url('administrator/produk/update/' . $produk->id_produk) ?>" enctype="multipart/form-data">
+            <form role="form" method="POST" action="<?= base_url('administrator/produk/simpan') ?>" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-12 col-md-8">
                         <div class="card card-primary">
                             <input type="hidden" name="<?= csrf_name() ?>" value="<?= csrf_token() ?>">
-                            <input type="hidden" value="<?= $produk->id_produk ?>" name="id_produk">
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="judul">Nama Produk</label>
-                                    <input type="text" class="form-control" value="<?= $produk->nm_produk ?>" placeholder="Nama Produk" required name="nm_produk">
+                                    <input type="text" class="form-control" id="nm_produk" placeholder="Nama Produk" required name="nm_produk">
                                 </div>
                                 <div class="form-group">
                                     <label for="isi_post">Penjelasan Produk</label>
-                                    <textarea id="content" class="form-control" name="penjelasan"><?= $produk->penjelasan ?></textarea>
+                                    <textarea id="content" class="form-control" name="penjelasan"></textarea>
                                 </div>
                                 <div class="form-group">
                                     <label for="judul">Harga Produk</label>
-                                    <input type="text" class="form-control" placeholder="Harga Produk" required name="harga" value="Rp. <?= number_format($produk->harga, 0, '.', '.') ?>" onkeyup="toRupiah(event)">
+                                    <input onkeyup="toRupiah(event)" type="text" class="form-control" id="harga" placeholder="Harga Produk" required name="harga">
                                 </div>
                             </div>
                             <div class="card-footer">
-                                <a href="<?= base_url('administrator/produk') ?>" class="btn btn-secondary">Batal</a>
-                                <button type="submit" id="simpan_produk" name="simpan_produk" class="btn btn-primary"><i class="fas fa-save"></i> Simpan</button>
-                                <button type="button" id="hapus_produk" class="btn btn-danger float-right"><i class="fas fa-trash"></i> Hapus</button>
+                                <a href="<?= base_url('administrator/produk') ?>" class="btn btn-danger">Batal</a>
+                                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Publish</button>
                             </div>
                         </div>
                     </div>
@@ -73,7 +71,7 @@
                                 <div class="form-group">
                                     <label>Pilih Gambar</label>
                                     <input type="file" name="gambar" class="form-control border-0" onchange="preview(event, '#img-holder')">
-                                    <img id="img-holder" src="<?= base_url() ?>assets/produk/img/<?= $produk->foto ?>" width="200" class="img-thumbnail mt-2 mx-auto d-block" onerror="this.style.cssText = 'display:none !important'">
+                                    <img src="#" id="img-holder" width="200" class="img-thumbnail mt-2 mx-auto d-block" onerror="this.style.cssText = 'display:none !important'">
                                 </div>
                             </div>
                         </div>
@@ -82,13 +80,8 @@
                                 <h6>File PDF</h6>
                             </div>
                             <div class="card-body">
-                                <?php if ($produk->link_produk != null) : ?>
-                                    <div class="form-group">
-                                        <a href="<?= $produk->link_produk ?>"><i class="far fa-file-pdf"></i> Link Produk</a>
-                                    </div>
-                                <?php endif; ?>
                                 <div class="form-group">
-                                    <label>Pilih PDF</label>
+                                    <label>Pilih File PDF</label>
                                     <input type="file" name="pdf" class="form-control border-0">
                                 </div>
                             </div>
@@ -140,25 +133,6 @@
         }
     });
 
-    document.getElementById('hapus_produk').addEventListener('click', (e) => {
-        e.preventDefault();
-        swal.fire({
-            title: 'Yakin hapus materi?',
-            html: 'Materi yang dihapus akan dibuang ke tempat sampah. Siswa tidak akan dapat melihat lagi materi ini ',
-            type: 'warning',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#ff5c75',
-            cancelButtonColor: '#333',
-            confirmButtonText: 'Yakin Hapus',
-            cancelButtonText: 'Batal',
-        }).then((res) => {
-            if (res.value) {
-                window.location.href = "<?= base_url('administrator/produk/hapus/' . $produk->id_produk) ?>";
-            }
-        })
-    })
-
     $('.select2-kategori').select2({
         placeholder: 'Pilih kategori'
     });
@@ -166,14 +140,4 @@
         tags: true,
         placeholder: 'Pilih Tags'
     });
-
-    <?php foreach ($produk->tags as $tag) : ?>
-        $('select[name="tags[]"] option[value="<?= $tag->id_tags ?>"]').prop('selected', true);
-    <?php endforeach ?>
-    $('select[name="tags[]"]').trigger('change');
-
-    <?php foreach ($produk->kategori as $kategori) : ?>
-        $('select[name="categories[]"] option[value="<?= $kategori->id_kategori ?>"]').prop('selected', true);
-    <?php endforeach ?>
-    $('select[name="categories[]"]').trigger('change');
 </script>

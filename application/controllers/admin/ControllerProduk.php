@@ -1,15 +1,26 @@
 <?php
 
+use App\Exceptions\CategoryInsertException;
+use App\Exceptions\TagInsertException;
+
 defined('BASEPATH') or exit('No direct script access allowed');
 
-// Website ini dibuat dan dikembangkan oleh awbimasakti
-// Nama Template : OnlineShop Non-Courir
-// Pencipta      : AWBimasakti and Yusuf1bimasakti
-// Author        : PT. Bimasakti Indera Gemilang
-// Creator       : https://ilmuparanormal.com
+/**
+ * This project was built and developed by awbimasakti
+ * 
+ * @package OnlineShop Non-Courir
+ * @author AWBimasakti <aw.bimasakti@gmail.com>
+ * @author ajid2 <yusuf1bimasakti@gmail.com>
+ * @copyright 2021 https://ilmuparanormal.com
+ */
 
 class ControllerProduk extends CI_Controller
 {
+
+    private $relation   = [
+        ['tags', ['id_tags', 'nm_tags']],
+        ['kategori', ['id_kategori', 'nm_kategori', 'slug']],
+    ];
 
     public function __construct()
     {
@@ -22,118 +33,183 @@ class ControllerProduk extends CI_Controller
         $this->set_timezone();
         should_auth();
     }
+
     public function set_timezone()
     {
         date_default_timezone_set("Asia/Jakarta");
     }
+
     public function index()
     {
-        $data_kategori     = $this->select_model->getProdukKategori();
-        $data_tags         = $this->select_model->getProdukTags();
-        $data_produk       = $this->db->get_where('tbl_produk')->result();
-        // echo "<pre>";
-        // var_dump($data_produk);
-        // die;
-        $data = array(
+        $data = [
             'folder'        => 'produk',
             'halaman'       => 'index',
-            'data_kategori' => $data_kategori,
-            'data_tags'     => $data_tags,
-            'data_produk'   => $data_produk
-        );
-        $this->load->view('admin/include/index', $data);
+            'data_kategori' => $this->select_model->getProdukKategori(),
+            'data_tags'     => $this->select_model->getProdukTags(),
+            'data_produk'   => $this->db->get_where('tbl_produk', ['status' => 'PUBLISH'])->result()
+        ];
+        return $this->load->view('admin/include/index', $data);
     }
-    public function d_produk($id)
+
+    public function create()
     {
-        $id_produk         = decrypt_url($id);
-        $data_kategori     = $this->db->get_where('tbl_kategori', ['status' => 'ADA'])->result();
-        $data_tags         = $this->select_model->getProdukTags();
-        $data_produk = $this->db->get_where('tbl_produk', ['id_produk' => $id_produk])->row_array();
-        $data = array(
+        $data = [
+            'folder'        => 'produk',
+            'halaman'       => 'tambah_produk',
+            'categories'    => $this->db->get_where('tbl_kategori', ['status' => 'ADA'])->result(),
+            'tags'          => $this->db->get_where('tbl_tags', ['status' => 'ADA'])->result()
+        ];
+
+        return $this->load->view('admin/include/index', $data);
+    }
+
+    public function store()
+    {
+        if ($_SERVER['REQUEST_METHOD'] != 'POST')
+            return redirect('administrator/produk/tambah_produk');
+
+        try {
+            $pdf    = (!empty($_FILES['pdf']['name'])) ? $this->uploadFile('pdf', './assets/produk/pdf', 'file')['file_name'] : null;
+            $foto   = (!empty($_FILES['gambar']['name'])) ? $this->uploadFile('gambar', './assets/produk/img', 'image')['file_name'] : null;
+            if ($pdf) {
+                $link = $this->update_model->shortLink('https://ilmuparanormal.com/assets/produk/pdf' . $pdf);
+            }
+        } catch (Throwable $e) {
+            if (!$pdf)
+                $link = null;
+        }
+
+        $id   = $this->randomString();
+        $data = [
+            'id_produk'   => $id,
+            'slug_produk' => url_title($this->input->post('nm_produk'), '-', true),
+            'nm_produk'   => htmlentities($this->input->post('nm_produk')),
+            'foto'        => $foto,
+            'penjelasan'  => htmlentities($this->input->post('penjelasan')),
+            'harga'       => preg_replace("/[^0-9]/", '', $this->input->post('harga')),
+            'nm_file'     => $pdf,
+            'link_produk' => ($pdf) ? $link : null,
+            'status'      => 'PUBLISH',
+            'tgl_publish' => date('Y-m-d')
+        ];
+
+        try {
+            $this->db->insert('tbl_produk', $data);
+            $this->insert_model->attachPostCategory($id, $_POST['categories']);
+            $this->insert_model->attachPostTag($id, $_POST['tags']);
+        } catch (Throwable $e) {
+            return redirect($_SERVER['HTTP_REFERER']);
+        } catch (CategoryInsertException $e) {
+            set_flash('produk', ['error', 'Error saat menambahkan kategori ke produk']);
+            return redirect($_SERVER['HTTP_REFERER']);
+        } catch (TagInsertException $e) {
+            set_flash('produk', ['error', 'Error saat menambahkan tag ke produk']);
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
+
+        set_flash('produk', ['success', 'Berhasil publish produk']);
+        redirect('administrator/produk');
+    }
+
+    public function edit($id)
+    {
+        $data = [
             'folder'        => 'produk',
             'halaman'       => 'detail_produk',
-            // Data Produk
-            'data_kategori' => $data_kategori,
-            'data_tags'     => $data_tags,
-            'data_produk'   => $data_produk
-        );
-        $this->load->view('admin/include/index', $data);
+            'categories'    => $this->db->get_where('tbl_kategori', ['status' => 'ADA'])->result(),
+            'tags'          => $this->db->get_where('tbl_tags', ['status' => 'ADA'])->result(),
+            'produk'        => $this->select_model->produkWith(decrypt_url($id), $this->relation)
+        ];
+
+        return $this->load->view('admin/include/index', $data);
     }
-    public function tambah_produk()
+
+    /**
+     * @todo Update tags with dynamic creation
+     * @param int $id
+     * @return void
+     */
+    public function update($id)
     {
-        $random = $this->__randomPassword();
-        $data = array(
-            'id_produk'   => $random,
-            'slug_produk' => null,
-            'nm_produk'   => null,
-            'foto'        => null,
-            'penjelasan'  => null,
-            'harga'       => '',
-            'nm_file'     => null,
-            'link_produk' => null,
-            'status'      => 'DRAFT',
-            'tgl_tambah'  => date('Y-m-d')
-        );
-        $this->db->insert('tbl_produk', $data);
-        $id = encrypt_url($random);
-        redirect('administrator/produk/d_produk/' . $id . '');
-    }
-    public function crudproduk()
-    {
-        if (isset($_POST['upload_sampul'])) :
-            $id_produk = decrypt_url($this->input->post('id_produk'));
-            $data_foto = $this->db->get_where('tbl_produk', ['id_produk' => $id_produk])->row_array();
-            if ($data_foto['foto'] == null) :
-                $this->update_model->upload_sampul_awal();
-            else :
-                $foto_lama = $data_foto['foto'];
-                $this->update_model->upload_sampul_akhir($foto_lama);
-            endif;
-            $id = encrypt_url($id_produk);
-            redirect('administrator/produk/d_produk/' . $id . '');
-        endif;
-        if (isset($_POST['upload_pdf'])) :
-            $id_produk   = decrypt_url($this->input->post('id_produk'));
-            $data_berkas = $this->db->get_where('tbl_produk', ['id_produk' => $id_produk])->row_array();
-            if ($data_berkas['nm_file'] == null) :
-                $this->update_model->upload_berkas_awal();
-            else :
-                $berkas_lama = $data_berkas['nm_file'];
-                $this->update_model->upload_berkas_akhir($berkas_lama);
-            endif;
-            $id = encrypt_url($id_produk);
-            redirect('administrator/produk/d_produk/' . $id . '');
-        endif;
-    }
-    public function simpan()
-    {
-        if (isset($_POST['simpan_produk'])) :
-            $nm_produk = htmlentities($this->input->post('nm_produk'));
-            $slug = url_title($nm_produk, 'dash', true);
-            $data = array(
-                'slug_produk' => $slug,
-                'nm_produk'   => $nm_produk,
-                'penjelasan'  => htmlentities($this->input->post('penjelasan')),
-                'harga'       => htmlentities($this->input->post('harga')),
-                'status'      => 'PUBLISH',
-                'tgl_publish' => date('Y-m-d')
-            );
-            $this->db->where('id_produk', htmlentities($this->input->post('id_produk')));
+        if (empty($id) || $_SERVER['REQUEST_METHOD'] != 'POST')
+            return redirect('administrator/produk');
+
+        $produk = $this->select_model->produkWith($id, $this->relation);
+
+        try {
+            $pdf    = (!empty($_FILES['pdf']['name'])) ? $this->uploadFile('pdf', './assets/produk/pdf', 'file', $produk->nm_file)['file_name'] : $produk->nm_file;
+            $foto   = (!empty($_FILES['gambar']['name'])) ? $this->uploadFile('gambar', './assets/produk/img', 'image', $produk->foto)['file_name'] : $produk->foto;
+            if ($pdf) {
+                $link = $this->update_model->shortLink('https://ilmuparanormal.com/assets/produk/pdf' . $pdf);
+            }
+        } catch (Throwable $e) {
+            if (!$pdf)
+                $link = $produk->link_produk;
+        }
+
+        $data = [
+            'slug_produk' => url_title($this->input->post('nm_produk'), '-', true),
+            'nm_produk'   => htmlentities($this->input->post('nm_produk')),
+            'foto'        => $foto,
+            'penjelasan'  => htmlentities($this->input->post('penjelasan')),
+            'harga'       => preg_replace("/[^0-9]/", '', $this->input->post('harga')),
+            'nm_file'     => $pdf,
+            'link_produk' => $link ?? $produk->link_produk,
+            'status'      => 'PUBLISH',
+            'tgl_publish' => date('Y-m-d')
+        ];
+        try {
+            $this->update_model->syncPostCategory($id, array_column($produk->kategori, 'id_kategori'), $_POST['categories']);
+            $this->update_model->syncPostTags($id, array_column($produk->tags, 'id_tags'), $_POST['tags']);
+
+            $this->db->where('id_produk', $id);
             $this->db->update('tbl_produk', $data);
-            $this->session->set_flashdata('berhasil_publish_produk', '<div class="berhasil_publish_produk"></div>');
-            redirect('administrator/produk');
-        endif;
-        if (isset($_POST['hapus_produk'])) :
-            $data = array(
-                'status'      => 'DELETE'
-            );
-            $this->db->where('id_produk', htmlentities($this->input->post('id_produk')));
-            $this->db->update('tbl_produk', $data);
-            $this->session->set_flashdata('berhasil_hapus_produk', '<div class="berhasil_hapus_produk"></div>');
-            redirect('administrator/produk');
-        endif;
+        } catch (Throwable $e) {
+            set_flash('produk', ['error', 'Error saat update produk']);
+            return redirect($_SERVER['HTTP_REFERER']);
+        }
+
+        set_flash('produk', ['success', 'Berhasil update produk']);
+        return redirect('administrator/produk');
     }
-    private function __randomPassword()
+
+    public function destroy($id)
+    {
+        if (empty($id))
+            return redirect('administrator/produk');
+
+        $this->db->where('id_produk', $id);
+        $this->db->update('tbl_produk', ['status' => 'DELETE']);
+        set_flash('produk', ['success', 'Berhasil hapus produk']);
+
+        return redirect('administrator/produk');
+    }
+
+
+    private function uploadFile($file, $path = null, $type = 'image', $oldfile = null)
+    {
+        $ext    = ['file' => ['pdf', 'doc', 'docx'], 'image' => ['jpg', 'png', 'gif', 'jpeg']];
+        $config = [
+            'upload_path'   => (is_null($path)) ? './assets/produk/img' : $path,
+            'allowed_types' => implode('|', $ext[$type]),
+            'encrypt_name'  => true,
+            'overwrite'     => true,
+            'max_size'      => 10024
+        ];
+
+        $this->load->library('upload', $config);
+        $this->upload->initialize($config);
+        if (!$this->upload->do_upload($file)) {
+            throw new \Exception($this->upload->display_errors() . ' File ' . $file . ' ' . implode('|', $ext[$type]));
+        }
+
+        if (file_exists($path . '/' . $oldfile))
+            unlink($path . '/' . $oldfile);
+
+        return $this->upload->data();
+    }
+
+    private function randomString()
     {
         $alphabet = "123456789";
         $pass = array(); //remember to declare $pass as an array
