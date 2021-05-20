@@ -67,14 +67,7 @@
                                                 ?>
                                             </td>
                                             <td style="text-align: center;">
-                                                <?php
-                                                if ($Data_produk->harga != 0) :
-                                                    # code...
-                                                    echo "Rp " . $Data_produk->harga . "-,";
-                                                else :
-                                                    echo 'Belum Disetting';
-                                                endif;
-                                                ?>
+                                                <?= ($Data_produk->harga != 0) ? "Rp. " . number_format($Data_produk->harga, 0, '.', '.') . "-," : 'Belum Disetting'; ?>
                                             </td>
                                             <td style="text-align: center;">
                                                 <?php
