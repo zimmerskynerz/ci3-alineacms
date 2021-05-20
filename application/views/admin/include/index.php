@@ -22,6 +22,9 @@ Creator       : https://ilmuparanormal.com
     <link rel="stylesheet" href="<?= base_url() ?>assets/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/admin/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
     <link rel="stylesheet" href="<?= base_url() ?>assets/admin/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+    <!-- plugins -->
+    <link rel="stylesheet" href="<?= base_url('assets/admin/plugins/select2/css/select2.min.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('assets/admin/plugins/toastr/toastr.min.css') ?>">
     <!-- Theme style -->
     <link rel="stylesheet" href="<?= base_url() ?>assets/admin/dist/css/adminlte.min.css">
     <script src="<?= base_url('assets/') ?>sweetalert2/dist/sweetalert2.min.js"></script>
@@ -29,6 +32,12 @@ Creator       : https://ilmuparanormal.com
     <link rel="stylesheet" href="<?= base_url() ?>assets/admin/style.css">
     <!-- CRUD JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="<?= base_url('assets/admin/plugins/toastr/toastr.min.js') ?>"></script>
+    <script>
+        toastr.options = {
+            "progressBar": true,
+        }
+    </script>
     <!-- 
     Template dibuat dan dikembangkan oleh awbimasakti
     Nama Template : OnlineShop Non-Courir
@@ -61,8 +70,6 @@ Creator       : https://ilmuparanormal.com
     </div>
     <!-- ./wrapper -->
 
-    <!-- jQuery -->
-    <script src="<?= base_url() ?>assets/admin/plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
     <script src="<?= base_url() ?>assets/admin/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- DataTables  & Plugins -->
