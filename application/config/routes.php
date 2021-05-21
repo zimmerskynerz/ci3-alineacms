@@ -19,6 +19,10 @@ $route['cart']                                      = 'Keranjang/index';
 $route['produk/snap/tambahkeranjang']               = 'Produk/crudtransaksi';
 $route['produk/snap/tokenkeranjang']                = 'Keranjang/token';
 $route['produk/snap/bayarkeranjang']                = 'Produk/bayarkeranjang';
+// Cari Nota
+$route['tracking']                                  = 'Nota/index';
+// Category Produk
+$route['category/(:any)']                           = 'Category/index/$1';
 
 // Akses Menu Administrator
 // Menu Utama Administrator

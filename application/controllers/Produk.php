@@ -154,7 +154,7 @@ class Produk extends CI_Controller
         $this->db->where('id_transaksi', $order_id);
         $this->db->update('tbl_transaksi', $data);
         $this->__kirimNotifBayar($order_id, $link_pdf);
-        redirect('produk/tracking-transaksi/' . $order_id);
+        redirect('home');
     }
     // Membuat sebuah link untuk cara pembayaran melalui midtrans
     // Untuk pembelian secara langsung atau hanya satu produk sahaja
@@ -302,7 +302,7 @@ class Produk extends CI_Controller
         $this->db->where('id_transaksi', $order_id);
         $this->db->update('tbl_transaksi', $data);
         $this->__kirimNotifBayarKeranjang($order_id, $link_pdf);
-        redirect('produk/tracking-transaksi/' . $order_id);
+        redirect('home');
     }
     private function _linkPDFKeranjang($pdf_url)
     {

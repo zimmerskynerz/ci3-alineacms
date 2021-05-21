@@ -29,7 +29,7 @@ private static $installed = array (
     'aliases' => 
     array (
     ),
-    'reference' => 'a4333e60640a63674bd6e4260ee494ac09239dfd',
+    'reference' => '84a911e263ca9efc27471e94585471c78673d172',
     'name' => 'codeigniter/framework',
   ),
   'versions' => 
@@ -41,7 +41,7 @@ private static $installed = array (
       'aliases' => 
       array (
       ),
-      'reference' => 'a4333e60640a63674bd6e4260ee494ac09239dfd',
+      'reference' => '84a911e263ca9efc27471e94585471c78673d172',
     ),
     'doctrine/instantiator' => 
     array (
@@ -346,12 +346,12 @@ private static $installed = array (
     ),
     'symfony/translation' => 
     array (
-      'pretty_version' => 'v5.2.8',
-      'version' => '5.2.8.0',
+      'pretty_version' => 'v5.2.9',
+      'version' => '5.2.9.0',
       'aliases' => 
       array (
       ),
-      'reference' => '445caa74a5986f1cc9dd91a2975ef68fa7cb2068',
+      'reference' => '61af68dba333e2d376a325a29c2a3f2a605b4876',
     ),
     'symfony/translation-contracts' => 
     array (
@@ -380,12 +380,12 @@ private static $installed = array (
     ),
     'symfony/yaml' => 
     array (
-      'pretty_version' => 'v4.4.22',
-      'version' => '4.4.22.0',
+      'pretty_version' => 'v4.4.24',
+      'version' => '4.4.24.0',
       'aliases' => 
       array (
       ),
-      'reference' => '1c2fd24147961525eaefb65b11987cab75adab59',
+      'reference' => '8b6d1b97521e2f125039b3fcb4747584c6dfa0ef',
     ),
     'webmozart/assert' => 
     array (
