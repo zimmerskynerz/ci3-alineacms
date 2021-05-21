@@ -141,73 +141,125 @@
                         <input type="text" name="result_data" id="result-data" style="display: none;">
                     </div>
                     <div class="form-group mb-3">
-                        <label for="example-email">No Handphone/WhatsApps</label>
+                        <label for="example-email">No Handphone/WhatsApp</label>
                         <input type="text" id="no_hp" name="no_hp" class="form-control" placeholder="Masukkan Nomor Handphone/WhatApps" required>
                     </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="pay-button" name="minta_ijin">Bayar</button>
+                    <button type="submit" class="btn btn-primary" id="pay-button" name="minta_ijin">Bayar</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+<script src="<?= base_url('assets/admin/plugins/jquery-validation/jquery.validate.min.js') ?>"></script>
 <script type="text/javascript">
-    $('#pay-button').click(function(event) {
-        $("#beli_langsung .close").click()
-        event.preventDefault();
-        $(this).attr("disabled", "disabled");
-        var id_produk = $("#id_produk").val();
-        var nm_produk = $("#nm_produk").val();
-        var harga = $("#harga").val();
-        var nm_pelanggan = $("#nm_pelanggan").val();
-        var email_aktif = $("#email_aktif").val();
-        var no_hp = $("#no_hp").val();
-        $.ajax({
-            type: 'POST',
-            url: '<?= base_url() ?>produk/snap/token',
-            data: {
-                id_produk: id_produk,
-                nm_produk: nm_produk,
-                harga: harga,
-                nm_pelanggan: nm_pelanggan,
-                email_aktif: email_aktif,
-                no_hp: no_hp
-            },
-            cache: false,
-            success: function(data) {
-                //location = data;
+    $.validator.addMethod(
+        "regex",
+        function(value, element, regexp) {
+            if (regexp && regexp.constructor != RegExp) {
+                regexp = new RegExp(regexp);
+            } else if (regexp.global) regexp.lastIndex = 0;
+            return this.optional(element) || regexp.test(value);
+        }
+    );
+    $.validator.setDefaults({
+        submitHandler: function() {
+            var id_produk = $("#id_produk").val();
+            var nm_produk = $("#nm_produk").val();
+            var harga = $("#harga").val();
+            var nm_pelanggan = $("#nm_pelanggan").val();
+            var email_aktif = $("#email_aktif").val();
+            var no_hp = $("#no_hp").val();
 
-                console.log('token = ' + data);
+            $.ajax({
+                type: 'POST',
+                url: '<?= base_url() ?>produk/snap/token',
+                data: {
+                    id_produk: id_produk,
+                    nm_produk: nm_produk,
+                    harga: harga,
+                    nm_pelanggan: nm_pelanggan,
+                    email_aktif: email_aktif,
+                    no_hp: no_hp
+                },
+                cache: false,
+                success: function(data) {
+                    $("#beli_langsung .close").click()
 
-                var resultType = document.getElementById('result-type');
-                var resultData = document.getElementById('result-data');
+                    console.log('token = ' + data);
 
-                function changeResult(type, data) {
-                    $("#result-type").val(type);
-                    $("#result-data").val(JSON.stringify(data));
-                }
+                    var resultType = document.getElementById('result-type');
+                    var resultData = document.getElementById('result-data');
 
-                snap.pay(data, {
-                    onSuccess: function(result) {
-                        changeResult('success', result);
-                        console.log(result.status_message);
-                        console.log(result);
-                        $("#payment-form").submit();
-                    },
-                    onPending: function(result) {
-                        changeResult('pending', result);
-                        console.log(result.status_message);
-                        $("#payment-form").submit();
-                    },
-                    onError: function(result) {
-                        changeResult('error', result);
-                        console.log(result.status_message);
-                        $("#payment-form").submit();
+                    function changeResult(type, data) {
+                        $("#result-type").val(type);
+                        $("#result-data").val(JSON.stringify(data));
                     }
-                });
+
+                    snap.pay(data, {
+                        onSuccess: function(result) {
+                            changeResult('success', result);
+                            console.log(result.status_message);
+                            console.log(result);
+                            $("#payment-form").submit();
+                            $('.se-pre-con').show();
+                        },
+                        onPending: function(result) {
+                            changeResult('pending', result);
+                            console.log(result.status_message);
+                            $("#payment-form").submit();
+                            $('.se-pre-con').show();
+                        },
+                        onError: function(result) {
+                            changeResult('error', result);
+                            console.log(result.status_message);
+                            $("#payment-form").submit();
+                            $('.se-pre-con').show();
+                        }
+                    });
+                }
+            });
+        }
+    });
+    $('#payment-form').validate({
+        rules: {
+            email_aktif: {
+                required: true,
+                email: true,
+                regex: /^\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b$/i
+            },
+            no_hp: {
+                required: true,
+                number: true
+            },
+            nm_pelanggan: {
+                required: true
             }
-        });
+        },
+        messages: {
+            email_aktif: {
+                required: "Email wajib diisi.",
+                email: "Mohon isi email dengan benar.",
+                regex: "Mohon isi email dengan benar."
+            },
+            no_hp: {
+                required: "No HP wajib diisi.",
+                number: "No HP hanya diisi angka."
+            },
+            nm_pelanggan: "Nama wajib diisi."
+        },
+        errorElement: 'span',
+        errorPlacement: function(error, element) {
+            error.addClass('invalid-feedback text-danger');
+            element.closest('.form-group').append(error);
+        },
+        highlight: function(element, errorClass, validClass) {
+            $(element).addClass('is-invalid text-danger');
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).removeClass('is-invalid text-danger');
+        }
     });
 </script>
