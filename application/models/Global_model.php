@@ -236,6 +236,7 @@ class Global_model extends CI_Model
         $query = $this->db->from('produk_kategori as A');
         $query = $this->db->join('tbl_produk as B', 'A.id_produk=B.id_produk');
         $query = $this->db->where('A.id_kategori', $id_kategori);
+        $query = $this->db->where('B.status', 'PUBLISH');
         $query = $this->db->get();
         return $query->result();
     }

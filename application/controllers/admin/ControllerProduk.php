@@ -72,7 +72,7 @@ class ControllerProduk extends CI_Controller
             $pdf    = (!empty($_FILES['pdf']['name'])) ? $this->uploadFile('pdf', './assets/produk/pdf', 'file')['file_name'] : null;
             $foto   = (!empty($_FILES['gambar']['name'])) ? $this->uploadFile('gambar', './assets/produk/img', 'image')['file_name'] : null;
             if ($pdf) {
-                $link = $this->update_model->shortLink('https://ilmuparanormal.com/assets/produk/pdf' . $pdf);
+                $link = $this->update_model->shortLink('https://ilmuparanormal.com/assets/produk/pdf/' . $pdf);
             }
         } catch (Throwable $e) {
             if (!$pdf)
@@ -140,7 +140,7 @@ class ControllerProduk extends CI_Controller
             $pdf    = (!empty($_FILES['pdf']['name'])) ? $this->uploadFile('pdf', './assets/produk/pdf', 'file', $produk->nm_file)['file_name'] : $produk->nm_file;
             $foto   = (!empty($_FILES['gambar']['name'])) ? $this->uploadFile('gambar', './assets/produk/img', 'image', $produk->foto)['file_name'] : $produk->foto;
             if ($pdf) {
-                $link = $this->update_model->shortLink('https://ilmuparanormal.com/assets/produk/pdf' . $pdf);
+                $link = $this->update_model->shortLink('https://ilmuparanormal.com/assets/produk/pdf/' . $pdf);
             }
         } catch (Throwable $e) {
             if (!$pdf)
