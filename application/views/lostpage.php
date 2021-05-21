@@ -10,9 +10,9 @@
     <!-- Google Font: Source Sans Pro -->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="<?= base_url('cms/assets/admin/') ?>plugins/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="<?= base_url('assets/admin/') ?>plugins/fontawesome-free/css/all.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="<?= base_url('cms/assets/admin/') ?>dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="<?= base_url('assets/admin/') ?>dist/css/adminlte.min.css">
     <style>
         @media (min-width: 768px) {
 
@@ -54,7 +54,7 @@
 
                     <p>
                         Anda Berhasil Menemukan Halaman Kosong Kami.
-                        Silahkan, Kembali <a href="<?= base_url('cms/assets/admin/') ?>index.html">kejalan yang benar</a> atau hubungi web developer.
+                        Silahkan, Kembali <a href="<?= base_url('assets/admin/') ?>index.html">kejalan yang benar</a> atau hubungi web developer.
                     </p>
 
                     <form class="search-form">
@@ -79,13 +79,13 @@
     </footer>
 
     <!-- jQuery -->
-    <script src="<?= base_url('cms/assets/admin/') ?>plugins/jquery/jquery.min.js"></script>
+    <script src="<?= base_url('assets/admin/') ?>plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap 4 -->
-    <script src="<?= base_url('cms/assets/admin/') ?>plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="<?= base_url('assets/admin/') ?>plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- AdminLTE App -->
-    <script src="<?= base_url('cms/assets/admin/') ?>dist/js/adminlte.min.js"></script>
+    <script src="<?= base_url('assets/admin/') ?>dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
-    <script src="<?= base_url('cms/assets/admin/') ?>dist/js/demo.js"></script>
+    <script src="<?= base_url('assets/admin/') ?>dist/js/demo.js"></script>
 </body>
 
 </html>

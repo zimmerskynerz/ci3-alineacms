@@ -133,6 +133,18 @@ class Keranjang extends CI_Controller
         error_log($snapToken);
         echo $snapToken;
     }
+    public function hapuskeranjang()
+    {
+        $os             = htmlentities($this->input->post('osos'));
+        $browser        = htmlentities($this->input->post('browser'));
+        $ip_pelanggan   = htmlentities($this->input->post('ip_pelanggan'));
+        $id_produk      = htmlentities($this->input->post('id_produk'));
+        $this->db->where('OS', $os);
+        $this->db->where('ip_pelanggan', $ip_pelanggan);
+        $this->db->where('browser', $browser);
+        $this->db->delete('rinci_transaksi_baru');
+        redirect('cart');
+    }
 }
         
     /* End of file  Keranjang.php */

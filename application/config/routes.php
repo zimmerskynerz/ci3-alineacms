@@ -18,6 +18,7 @@ $route['notif/order']                               = 'Produk/NotifLangsung';
 $route['cart']                                      = 'Keranjang/index';
 $route['produk/snap/tambahkeranjang']               = 'Produk/crudtransaksi';
 $route['produk/snap/tokenkeranjang']                = 'Keranjang/token';
+$route['produk/snap/hapuskeranjang']                = 'Keranjang/hapuskeranjang';
 $route['produk/snap/bayarkeranjang']                = 'Produk/bayarkeranjang';
 // Cari Nota
 $route['tracking']                                  = 'Nota/index';

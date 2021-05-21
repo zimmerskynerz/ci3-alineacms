@@ -65,7 +65,7 @@
                                     <td><?= $Keranjang->nm_produk ?></td>
                                     <td style="text-align: center;">Rp <?= $Keranjang->harga ?>,-</td>
                                     <td style="text-align: center;">
-                                        <a id="keranjang_detail" href="javascript:void(0);" class="bs-tooltip" data-toggle="modal" data-target="#detail_keranjang" data-ip_pelanggan="<?= $Keranjang->ip_pelanggan ?>" data-browser="<?= $Keranjang->browser ?>" data-OS="<?= $Keranjang->OS ?>" data-id_produk="<?= $Keranjang->id_produk ?>">
+                                        <a id="keranjang_detail" href="javascript:void(0);" class="bs-tooltip" data-toggle="modal" data-target="#detail_keranjang" data-ip_pelanggan="<?= $Keranjang->ip_pelanggan ?>" data-browser="<?= $Keranjang->browser ?>" data-osos="<?= $Keranjang->OS ?>" data-id_produk="<?= $Keranjang->id_produk ?>" data-nm_produk="<?= $Keranjang->nm_produk ?>" data-harga="<?= $Keranjang->harga ?>">
                                             <i class="fa fa-edit"></i>
                                         </a>
                                     </td>
@@ -75,9 +75,11 @@
                             ?>
                         </tbody>
                     </table>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bayar_keranjang">
-                        Bayar
-                    </button><br><br>
+                    <?php if ($jml_keranjang > 0) : ?>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#bayar_keranjang">
+                            Bayar
+                        </button><br><br>
+                    <?php endif; ?>
                     <div class="headding-border"></div>
                 </div>
             </div>
@@ -122,7 +124,64 @@
         </div>
     </div>
 </div>
-
+<!-- Detail Kategori -->
+<div class="modal fade" id="detail_keranjang" tabindex="-1" role="dialog" aria-labelledby="detail_keranjangTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="detail_keranjangTitle">
+                    Detail Doa!
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="detail_body">
+                <?php echo form_open_multipart('produk/snap/hapuskeranjang'); ?>
+                <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>" style="display: none">
+                <div class="form-group mb-3">
+                    <label for="example-email">Kode Produk</label>
+                    <input type="text" id="id_produk" readonly name="id_produk" name="example-email" class="form-control" placeholder="Masukkan Email Pengguna" required>
+                    <input type="text" id="ip_pelanggan" style="display: none;" name="ip_pelanggan" name="example-email" class="form-control" placeholder="Masukkan Email Pengguna" required>
+                    <input type="text" id="browser" style="display: none;" name="browser" name="example-email" class="form-control" placeholder="Masukkan Email Pengguna" required>
+                    <input type="text" id="osos" style="display: none;" name="osos" name="example-email" class="form-control" placeholder="Masukkan Email Pengguna" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="example-email">Nama Produk</label>
+                    <input type="text" id="nm_produk" readonly name="nm_produk" name="example-email" class="form-control" placeholder="Masukkan Username Pengguna" required>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="example-email">Harga Produk</label>
+                    <input type="text" id="harga" name="harga" readonly name="example-email" class="form-control" placeholder="Masukkan Nama Pengguna" required>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">
+                    Close
+                </button>
+                <button type="submit" id="hapus_keranjang" name="hapus_keranjang" class="btn btn-danger">Hapus</button>
+            </div>
+            <?php echo form_close(); ?>
+        </div>
+    </div>
+</div>
+<!-- Form Ajax Kategori Juri -->
+<script type="text/javascript">
+    $(document).on("click", "#keranjang_detail", function() {
+        var id_produk = $(this).data('id_produk');
+        var nm_produk = $(this).data('nm_produk');
+        var harga = $(this).data('harga');
+        var ip_pelanggan = $(this).data('ip_pelanggan');
+        var browser = $(this).data('browser');
+        var osos = $(this).data('osos');
+        $(".modal-body#detail_body #id_produk").val(id_produk);
+        $(".modal-body#detail_body #nm_produk").val(nm_produk);
+        $(".modal-body#detail_body #harga").val(harga);
+        $(".modal-body#detail_body #ip_pelanggan").val(ip_pelanggan);
+        $(".modal-body#detail_body #browser").val(browser);
+        $(".modal-body#detail_body #osos").val(osos);
+    })
+</script>
 <script src="<?= base_url('assets/admin/plugins/jquery-validation/jquery.validate.min.js') ?>"></script>
 <script type="text/javascript">
     $.validator.addMethod(
