@@ -221,4 +221,22 @@ class Global_model extends CI_Model
         $query = $this->db->get();
         return $query->result();
     }
+    function getDataDoaPelanggan($no_nota)
+    {
+        $query = $this->db->select('*');
+        $query = $this->db->from('rinci_transaksi as A');
+        $query = $this->db->join('tbl_produk as B', 'A.id_produk=B.id_produk');
+        $query = $this->db->where('A.id_transaksi', $no_nota);
+        $query = $this->db->get();
+        return $query->result();
+    }
+    function getDataDoaKategori($id_kategori)
+    {
+        $query = $this->db->select('*');
+        $query = $this->db->from('produk_kategori as A');
+        $query = $this->db->join('tbl_produk as B', 'A.id_produk=B.id_produk');
+        $query = $this->db->where('A.id_kategori', $id_kategori);
+        $query = $this->db->get();
+        return $query->result();
+    }
 }
