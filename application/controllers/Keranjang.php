@@ -25,7 +25,7 @@ class Keranjang extends CI_Controller
         $this->load->library('veritrans');
         // Midtrans Konfigurasi
         $config_midtrans2     = $this->db->get_where('config_midtrans')->row_array();
-        $params               = array('server_key' => $config_midtrans2['server_key'], 'production' => false);
+        $params               = array('server_key' => $config_midtrans2['server_key'], 'production' => true);
         $this->load->library('midtrans');
         $this->midtrans->config($params);
         $this->load->helper('url');

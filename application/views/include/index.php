@@ -109,7 +109,8 @@
                             </ul>
                         </li>
                         <li><a href="<?= base_url() ?>berita" class="category08">BERITA</a></li>
-                        <li><a href="<?= base_url() ?>login" class="category08">LOGIN</a></li>
+                        <li><a href="<?= base_url() ?>tracking" class="category08">NOTA</a></li>
+                        <li><a href="<?= base_url() ?>cart" class="category08"><i class="fa fa-cart-arrow-down badge-notif" data-badge="<?= $jml_keranjang ?>"></i></a></li>
                     </ul>
                 </div>
             </nav>

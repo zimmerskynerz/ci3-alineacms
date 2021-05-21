@@ -213,31 +213,31 @@ class Produk extends CI_Controller
     {
         $json_result = file_get_contents('php://input');
         $result = json_decode($json_result, "true");
-
         $order_id      = $result['order_id'];
-        // $order_id      = 20210518701829585;
-        $cek_doa     = $this->global_model->cekDataDoa($order_id);
-        $jml_doa       = count($cek_doa);
-        if ($jml_doa > 1) :
-            # code...
-            // Jika Membeli menggunakan fitur Keranjang
-            $data = array(
-                'status_transaksi' => 200
-            );
-            $this->db->where('id_transaksi', $order_id);
-            $this->db->update('tbl_transaksi', $data);
-            $this->__KirimDoaKeranjang($order_id);
-            echo 'Selamat Datang Keranjang';
-        else :
-            // Jika Membeli langsung
-            $data = array(
-                'status_transaksi' => 200
-            );
-            $this->db->where('id_transaksi', $order_id);
-            $this->db->update('tbl_transaksi', $data);
-            $this->__KirimDoa($order_id);
-            echo 'Selamat Datang Langsung';
+        $status_code   = $result['status_code'];
+        if ($status_code == 200) :
+            $cek_doa     = $this->global_model->cekDataDoa($order_id);
+            $jml_doa       = count($cek_doa);
+            if ($jml_doa > 1) :
+                # code...
+                // Jika Membeli menggunakan fitur Keranjang
+                $data = array(
+                    'status_transaksi' => 200
+                );
+                $this->db->where('id_transaksi', $order_id);
+                $this->db->update('tbl_transaksi', $data);
+                $this->__KirimDoaKeranjang($order_id);
+            else :
+                // Jika Membeli langsung
+                $data = array(
+                    'status_transaksi' => 200
+                );
+                $this->db->where('id_transaksi', $order_id);
+                $this->db->update('tbl_transaksi', $data);
+                $this->__KirimDoa($order_id);
+            endif;
         endif;
+        // $order_id      = 20210518701829585;
     }
     // Kode untuk mengirim konfirmasi setelah pembayaran berhasil dilakukan
     // Isi dari email ini memberitahukan link download untuk mengakses doa dalam bentuk pdf
