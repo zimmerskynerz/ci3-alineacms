@@ -103,7 +103,7 @@
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle category03" data-toggle="dropdown">RUMAH TANGGA <span class="pe-7s-angle-down"></span></a>
                             <ul class="dropdown-menu menu-slide">
-                                <li><a href="<?= base_url() ?>category/percintaan">PERCINTAAn</a></li>
+                                <li><a href="<?= base_url() ?>category/percintaan">PERCINTAAN</a></li>
                                 <li><a href="<?= base_url() ?>category/ilmu-hitam">ILMU HITAM</a></li>
                                 <li><a href="<?= base_url() ?>category/remaja">REMAJA</a></li>
                             </ul>
